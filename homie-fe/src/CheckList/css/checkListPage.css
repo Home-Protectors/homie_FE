@@ -1,0 +1,12 @@
+/* src/CheckList/css/checkListPage.css */
+.checklist-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
