@@ -11,11 +11,11 @@
     
     /* 아이콘 버튼 스타일 */
     .icon-button {
-      width: 55px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border: none;
       background-color: #333;
-      border-radius: 20%;
+      border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -23,7 +23,7 @@
       transition: all 0.3s ease;
     }
     
-    .icon-button:hover {
+    .icon-button:hover, .icon-button.hover {
       transform: scale(1.1);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -34,7 +34,8 @@
       transition: all 0.3s ease;
     }
     
-    .icon-button:hover .icon {
+    .icon-button:hover .icon,
+    .icon-button.hover .icon {
       transform: rotate(10deg);
     }
     
@@ -53,28 +54,19 @@
       font-weight: 700;
       color: #000;
       cursor: pointer;
-      transition: all 0.3s ease;
       position: relative;
-      overflow: hidden;
+      transition: all 0.3s ease;
     }
     
-    .nav-button:hover {
+    .nav-button:hover,
+    .nav-button.hover {
       transform: translateY(-2px);
     }
     
-    .nav-button:not(.active):hover {
+    .nav-button:not(.active):hover,
+    .nav-button:not(.active).hover {
       background-color: rgba(255, 230, 0, 0.1);
       border-radius: 30px;
-    }
-    
-    .nav-button:active {
-      transform: translateY(1px);
-    }
-    
-    .nav-button.active {
-      background-color: #FFE600;
-      border-radius: 30px;
-      box-shadow: 0 4px 8px rgba(255, 230, 0, 0.3);
     }
     
     .nav-button::after {
@@ -89,8 +81,15 @@
       transform: translateX(-50%);
     }
     
-    .nav-button:not(.active):hover::after {
+    .nav-button:not(.active):hover::after,
+    .nav-button:not(.active).hover::after {
       width: 80%;
+    }
+    
+    .nav-button.active {
+      background-color: #FFE600;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(255, 230, 0, 0.3);
     }
     
     /* 추가 애니메이션 효과 */
@@ -100,11 +99,13 @@
       100% { transform: scale(1); }
     }
     
-    .nav-button:hover {
+    .nav-button:hover,
+    .nav-button.hover {
       animation: buttonPulse 1s infinite;
     }
     
-    .nav-button.active:hover {
+    .nav-button.active:hover,
+    .nav-button.active.hover {
       animation: none;
       transform: none;
     }
