@@ -1,0 +1,110 @@
+/* src/Header/header.css */
+.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: #fff;
+      border: 2px solid #002887;
+      margin: 10px;
+    }
+    
+    /* 아이콘 버튼 스타일 */
+    .icon-button {
+      width: 55px;
+      height: 44px;
+      border: none;
+      background-color: #333;
+      border-radius: 20%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .icon-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .icon {
+      width: 24px;
+      height: 24px;
+      transition: all 0.3s ease;
+    }
+    
+    .icon-button:hover .icon {
+      transform: rotate(10deg);
+    }
+    
+    /* 네비게이션 버튼 스타일 */
+    .header-center {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .nav-button {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      font-family: "PyeongChang Peace";
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .nav-button:not(.active):hover {
+      background-color: rgba(255, 230, 0, 0.1);
+      border-radius: 30px;
+    }
+    
+    .nav-button:active {
+      transform: translateY(1px);
+    }
+    
+    .nav-button.active {
+      background-color: #FFE600;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(255, 230, 0, 0.3);
+    }
+    
+    .nav-button::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: #FFE600;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .nav-button:not(.active):hover::after {
+      width: 80%;
+    }
+    
+    /* 추가 애니메이션 효과 */
+    @keyframes buttonPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .nav-button:hover {
+      animation: buttonPulse 1s infinite;
+    }
+    
+    .nav-button.active:hover {
+      animation: none;
+      transform: none;
+    }
