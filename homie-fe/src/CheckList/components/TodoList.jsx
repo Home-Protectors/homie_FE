@@ -31,6 +31,11 @@ const TodoList = ({ listId }) => {
     }
   };
 
+  // 삭제 기능 추가
+  const handleDelete = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
   return (
     <div className="todo-container">
       <div className="todo-header">
@@ -50,6 +55,13 @@ const TodoList = ({ listId }) => {
               <span className="checkmark"></span>
               <span className="todo-text">{todo.text}</span>
             </label>
+            <button 
+              className="delete-button"
+              onClick={() => handleDelete(todo.id)}
+              aria-label="삭제"
+            >
+              ×
+            </button>
           </div>
         ))}
         
