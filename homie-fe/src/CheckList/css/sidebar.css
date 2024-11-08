@@ -2,80 +2,105 @@
 .sidebar {
       width: 300px;
       height: 100vh;
-      background-color: #F4F4F4;
+      background-color: #DFE1E5;
       padding: 20px;
       font-family: "PyeongChang Peace";
-    }
-    
-    .sidebar-title {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    
-    .search-bar input {
+      position: relative;
+      border-right: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+}
+
+.search-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+}
+
+.search-input {
       width: 100%;
-      padding: 10px;
+      padding: 10px 15px;
       border: none;
       border-radius: 8px;
       background-color: white;
-      margin-bottom: 20px;
-    }
-    
-    .stats-container {
+      font-size: 16px;
+}
+
+/* 통계 버튼 스타일 수정 */
+.stats-container {
       display: flex;
-      gap: 20px;
+      justify-content: center;
+      gap: 15px;
       margin-bottom: 30px;
-    }
-    
-    .stat-box {
-      background-color: white;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 0 10px;
+}
+
+.stat-box {
       flex: 1;
+      background-color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
       text-align: center;
-    }
-    
-    .stat-number {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #424344;
+      font-family: "PyeongChang Peace";
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      text-transform: capitalize;
+}
+
+.stat-box:hover {
+      background-color: #f0f0f0;
+}
+
+.stat-number {
       display: block;
       font-size: 24px;
       font-weight: 700;
-    }
-    
-    .stat-label {
-      font-size: 14px;
-    }
-    
-    .checklist-nav {
-      margin-top: 30px;
-    }
-    
-    .nav-item {
+      margin-bottom: 5px;
+}
+
+.section-title {
+      font-size: 18px;
+      margin: 20px 0 10px 0;
+      padding: 0;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+}
+
+.nav-item {
+      width: 100%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 15px;
+      border: none;
+      background: none;
       cursor: pointer;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    
-    .nav-item.active {
+      font-family: "PyeongChang Peace";
+      text-align: left;
+}
+
+.nav-item.active {
       background-color: white;
-    }
-    
-    .count {
-      color: #666;
-    }
-    
-    .home-button {
+      border-radius: 8px;
+}
+
+.home-button {
       position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      padding: 15px;
+      width: 80%;
+      bottom: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
       border: none;
       border-radius: 8px;
       background-color: white;
       font-family: "PyeongChang Peace";
       cursor: pointer;
-    }
+      white-space: nowrap;
+}
