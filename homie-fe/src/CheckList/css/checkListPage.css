@@ -3,11 +3,28 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-    
-    .content {
+}
+
+.content {
       display: flex;
-      gap: 0; 
+      gap: 0;
       flex: 1;
       overflow: hidden;
-    }
+}
+
+.intro-container,
+.checklist-page {
+      animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+      from {
+            opacity: 0;
+            transform: translateY(20px);
+      }
+
+      to {
+            opacity: 1;
+            transform: translateY(0);
+      }
+}

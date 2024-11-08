@@ -1,47 +1,146 @@
 .App {
-  text-align: center;
+      text-align: center;
+      position: relative;
+      overflow-x: hidden;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+      height: 40vmin;
+      pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+      .App-logo {
+            animation: App-logo-spin infinite 20s linear;
+      }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+      background-color: #282c34;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(10px + 2vmin);
+      color: white;
 }
 
 .App-link {
-  color: #61dafb;
+      color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+      from {
+            transform: rotate(0deg);
+      }
+
+      to {
+            transform: rotate(360deg);
+      }
 }
 
 /* font */
 @font-face {
-      font-family: 'PyeongChang Peace';
-      src: url('/fonts/PyeongChangPeace-Bold.woff2') format('woff2'),
-           url('/fonts/PyeongChangPeace-Bold.woff') format('woff');
+      font-family: 'PyeongChang-Bold';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChang-Bold.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+}
+
+@font-face {
+      font-family: 'PyeongChangPeace-Bold';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
-    }
+}
+
+.App {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+}
+
+.page-container {
+      position: absolute;
+      width: 100%;
+      min-height: calc(100vh - 80px);
+      /* header 높이만큼 빼기 */
+      left: 0;
+      right: 0;
+}
+
+/* 페이지 진입 애니메이션 */
+.page-enter {
+      opacity: 0;
+      transform: translateX(100%);
+}
+
+.page-enter-active {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 400ms ease, transform 400ms ease;
+}
+
+/* 페이지 퇴장 애니메이션 */
+.page-exit {
+      opacity: 1;
+      transform: translateX(0);
+}
+
+.page-exit-active {
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 400ms ease, transform 400ms ease;
+}
+
+
+/* 페이지 진입 애니메이션 */
+.page-enter {
+      opacity: 0;
+      transform: scale(0.9);
+}
+
+.page-enter-active {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 300ms, transform 300ms;
+}
+
+/* 페이지 퇴장 애니메이션 */
+.page-exit {
+      opacity: 1;
+      transform: scale(1);
+}
+
+.page-exit-active {
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 300ms, transform 300ms;
+}
+
+
+/* 자연스러운 전환 */
+/* 페이지 진입 애니메이션 */
+.page-enter {
+      opacity: 0;
+      transform: translateY(20px);
+}
+
+.page-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 300ms, transform 300ms;
+}
+
+/* 페이지 퇴장 애니메이션 */
+.page-exit {
+      opacity: 1;
+      transform: translateY(0);
+}
+
+.page-exit-active {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 300ms, transform 300ms;
+}
