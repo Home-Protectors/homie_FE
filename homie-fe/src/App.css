@@ -70,6 +70,7 @@
       right: 0;
 }
 
+/* 슬라이드 전환 */
 /* 페이지 진입 애니메이션 */
 .page-enter {
       opacity: 0;
@@ -94,7 +95,7 @@
       transition: opacity 400ms ease, transform 400ms ease;
 }
 
-
+/* 확대 축소 전환 */
 /* 페이지 진입 애니메이션 */
 .page-enter {
       opacity: 0;
