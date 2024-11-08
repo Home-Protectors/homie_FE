@@ -38,7 +38,7 @@ const Header = () => {
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >
-          자취 백과사전
+          자취 Dictionary
         </button>
         <button 
           className={`nav-button ${activeTab === '/checklist' ? 'active' : ''}`}
@@ -46,7 +46,7 @@ const Header = () => {
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >
-          자취 체크리스트
+          자취 CheckList
         </button>
         <button 
           className={`nav-button ${activeTab === '/tips' ? 'active' : ''}`}
@@ -54,7 +54,7 @@ const Header = () => {
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >
-          자취팁 추천
+          자취 Item 추천
         </button>
       </div>
 

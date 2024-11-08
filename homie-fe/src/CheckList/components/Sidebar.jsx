@@ -25,7 +25,7 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
 
       return (
             <div className="sidebar">
-                  <h1 className="sidebar-title">자취 체크리스트</h1>
+                  <h1 className="sidebar-title">자취 CheckList</h1>
 
                   <div className="search-container">
                         <input
@@ -54,6 +54,7 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
                   </div>
 
                   <h2 className="section-title">나의 목록</h2>
+
                   <div className="checklist-nav">
                         {checkLists.map(list => (
                               <button
