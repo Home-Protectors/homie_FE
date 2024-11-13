@@ -1,9 +1,11 @@
 // src/Dic/components/IntroPage.jsx
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/introPage.css';
 
 const IntroPage = () => {
   const [isAnimated, setIsAnimated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,14 +33,38 @@ const IntroPage = () => {
         <div className="bottom-frame">
           <div className="button-grid">
             <div className="grid-row">
-              <button className="grid-button">자취 비용 계획</button>
-              <button className="grid-button">집 보러 가기</button>
-              <button className="grid-button">주택의 종류와 개념</button>
+              <button 
+                className="grid-button"
+                onClick={() => navigate('/detailInfo/expense-plan')}>
+                  자취 비용 계획
+              </button>
+              <button 
+                className="grid-button" 
+                onClick={() => navigate('/detailInfo/house-viewing')}>
+                  집 보러 가기
+              </button>
+              <button 
+                className="grid-button" 
+                onClick={() => navigate('/detailInfo/house-types')}>
+                  주택의 종류와 개념
+              </button>
             </div>
             <div className="grid-row">
-              <button className="grid-button">계약 전 확인하기</button>
-              <button className="grid-button">계약하기</button>
-              <button className="grid-button">전세에 대한 모든 것</button>
+              <button 
+                className="grid-button" 
+                onClick={() => navigate('/detailInfo/pre-contract')}>
+                  계약 전 확인하기
+              </button>
+              <button 
+                className="grid-button" 
+                onClick={() => navigate('/detailInfo/contract')}>
+                  계약하기
+              </button>
+              <button 
+                className="grid-button" 
+                onClick={() => navigate('/detailInfo/jeonse-info')}>
+                  전세에 대한 모든 것
+              </button>
             </div>
           </div>
         </div>
