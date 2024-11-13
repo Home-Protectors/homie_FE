@@ -1,0 +1,52 @@
+.detail-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .detail-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .detail-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  .content-section {
+    margin-bottom: 2rem;
+  }
+  
+  .content-section h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Animation classes */
+  .page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 400ms, transform 400ms;
+  }
+  
+  .page-exit {
+    opacity: 1;
+  }
+  
+  .page-exit-active {
+    opacity: 0;
+    transition: opacity 400ms;
+  }
