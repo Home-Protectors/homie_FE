@@ -16,3 +16,4 @@ const ContractPage = () => {
 };
 
 export default ContractPage;
+
