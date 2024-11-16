@@ -115,3 +115,128 @@
       cursor: pointer;
       white-space: nowrap;
 }
+/* 새 목록 추가 버튼 */
+.add-button {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: "PyeongChang Peace";
+      text-align: center;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+      background-color: #0056b3;
+}
+
+/* 목록 삭제 버튼 */
+.delete-list-button {
+      font-size: 20px;
+      color: #E74C3C;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+}
+
+.delete-list-button:hover {
+      color: #C0392B;
+}
+
+/* 새로운 목록 입력 필드 */
+.new-list-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: white;
+      font-size: 16px;
+      margin-top: 15px;
+      font-family: "PyeongChang";
+}
+
+/* 저장 및 취소 버튼 */
+.save-button,
+.cancel-button {
+      width: 48%;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: "PyeongChang Peace";
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+}
+
+.save-button {
+      background-color: #28A745;
+      color: white;
+      transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+      background-color: #218838;
+}
+
+.cancel-button {
+      background-color: #FFC107;
+      color: white;
+      transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+      background-color: #E0A800;
+}
+
+/* 추가 목록 입력 및 버튼 컨테이너 */
+.add-new-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+}
+
+/* 검색 초기화 버튼 */
+.reset-button {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #A5A7AA;
+      transition: color 0.3s ease;
+}
+
+.reset-button:hover {
+      color: #424344;
+}
+
+/* 삭제 버튼과 목록 컨테이너 */
+.nav-item-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+}
+
+.nav-item-container:last-child {
+      border-bottom: none;
+}
+
+/* 홈 버튼 개선 */
+.home-button:hover {
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease;
+}
