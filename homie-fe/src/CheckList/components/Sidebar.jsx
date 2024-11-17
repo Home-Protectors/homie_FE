@@ -2,80 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/sidebar.css';
 
-const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => {
+const Sidebar = ({ checkLists, onSelectList, selectedList, onViewAll, onViewCompleted, onCreateList, onDeleteList }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
-
-  // 로컬 스토리지에서 초기값 가져오기
-  const getInitialCheckLists = () => {
-    const storedLists = localStorage.getItem('checkLists');
-    return storedLists
-      ? JSON.parse(storedLists)
-      : [
-          { id: 1, title: '관리비 Check', count: 5 },
-          { id: 2, title: '자취 필수품', count: 10 },
-          { id: 3, title: '인테리어 쇼핑', count: 2 },
-        ];
-  };
-
-  const [checkLists, setCheckLists] = useState(getInitialCheckLists());
-  const [filteredLists, setFilteredLists] = useState(checkLists); // 검색 결과를 저장
+  const [filteredLists, setFilteredLists] = useState(checkLists); // 검색 결과 저장
   const [newListTitle, setNewListTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const navigate = useNavigate();
 
-  // 목록이 변경될 때마다 로컬 스토리지에 저장
+  // checkLists가 변경될 때 검색 결과도 동기화
   useEffect(() => {
-    localStorage.setItem('checkLists', JSON.stringify(checkLists));
-    setFilteredLists(checkLists); // 목록이 변경될 때 검색 결과도 동기화
+    setFilteredLists(checkLists);
   }, [checkLists]);
 
-  // 검색 기능 구현
+  // 검색 기능
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       if (searchTerm.trim() === '') {
-        setFilteredLists(checkLists); // 검색어가 없으면 전체 목록 표시
+        setFilteredLists(checkLists);
       } else {
         const filtered = checkLists.filter((list) =>
           list.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        setFilteredLists(filtered); // 검색 결과 저장
+        setFilteredLists(filtered);
       }
     }
   };
 
-  // 원상태로 되돌릴 때 로컬 스토리지에서 데이터 복원
+  // 검색 초기화
   const resetSearch = () => {
     setSearchTerm('');
-    setFilteredLists(checkLists); // 로컬 스토리지에서 복원된 데이터 표시
+    setFilteredLists(checkLists);
   };
 
   // 새로운 목록 추가
   const handleAddNewList = () => {
     if (newListTitle.trim()) {
-      const newList = {
-        id: Date.now(), // 고유 ID 생성
-        title: newListTitle.trim(),
-        count: 0, // 초기 count 값 설정
-      };
-      const updatedLists = [newList, ...checkLists];
-      setCheckLists(updatedLists); // 목록 업데이트
+      onCreateList(newListTitle.trim()); // 부모 컴포넌트의 목록 추가 핸들러 호출
       setNewListTitle('');
       setIsAdding(false);
-      onSelectList(newList.id, newList.title); // 새로 추가된 목록 선택
-    }
-  };
-
-  // 목록 삭제
-  const handleDeleteList = (id) => {
-    const updatedLists = checkLists.filter((list) => list.id !== id);
-    setCheckLists(updatedLists);
-
-    if (selectedList === id) {
-      if (updatedLists.length > 0) {
-        onSelectList(updatedLists[0].id, updatedLists[0].title); // 첫 번째 리스트 선택
-      } else {
-        onSelectList(null, ''); // 선택된 리스트 없음
-      }
     }
   };
 
@@ -93,23 +57,15 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
           className="search-input"
         />
         {searchTerm && (
-          <button className="reset-button" onClick={resetSearch}>
-            X
-          </button>
+          <button className="reset-button" onClick={resetSearch}>X</button>
         )}
       </div>
 
       <div className="stats-container">
-        <button
-          className={`stat-box ${selectedList === 'all' ? 'active' : ''}`}
-          onClick={onViewAll}
-        >
+        <button className={`stat-box ${selectedList === 'all' ? 'active' : ''}`} onClick={onViewAll}>
           ALL
         </button>
-        <button
-          className={`stat-box ${selectedList === 'done' ? 'active' : ''}`}
-          onClick={onViewCompleted}
-        >
+        <button className={`stat-box ${selectedList === 'done' ? 'active' : ''}`} onClick={onViewCompleted}>
           DONE
         </button>
       </div>
@@ -126,11 +82,7 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
               <span>{list.title}</span>
               <span className="count">{list.count}</span>
             </button>
-            <button
-              className="delete-list-button"
-              onClick={() => handleDeleteList(list.id)}
-              aria-label="삭제"
-            >
+            <button className="delete-list-button" onClick={() => onDeleteList(list.id)} aria-label="삭제">
               X
             </button>
           </div>
@@ -146,20 +98,11 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
             onChange={(e) => setNewListTitle(e.target.value)}
             className="new-list-input"
           />
-          <button className="save-button" onClick={handleAddNewList}>
-            저장
-          </button>
-          <button className="cancel-button" onClick={() => setIsAdding(false)}>
-            취소
-          </button>
+          <button className="save-button" onClick={handleAddNewList}>저장</button>
+          <button className="cancel-button" onClick={() => setIsAdding(false)}>취소</button>
         </div>
       ) : (
-        <button
-          className="add-button"
-          onClick={() => setIsAdding(true)}
-        >
-          + 새로운 목록 만들기
-        </button>
+        <button className="add-button" onClick={() => setIsAdding(true)}>+ 새로운 목록 만들기</button>
       )}
 
       <button className="home-button" onClick={() => navigate('/')}>

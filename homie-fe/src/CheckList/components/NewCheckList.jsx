@@ -25,7 +25,7 @@ const NewCheckList = ({ onSave }) => {
         <button type="submit">저장</button>
       </form>
     </div>
-  );
+   );
 };
 
 export default NewCheckList;
