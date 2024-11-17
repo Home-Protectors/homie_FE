@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/sidebar.css';
 
@@ -11,10 +11,23 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
     { id: 2, title: '자취 필수품', count: 10 },
     { id: 3, title: '인테리어 쇼핑', count: 2 },
   ];
-  const [checkLists, setCheckLists] = useState(initialCheckLists);
 
+  // 로컬 스토리지에서 초기값 가져오기
+  const getInitialCheckLists = () => {
+    const storedLists = localStorage.getItem('checkLists');
+    return storedLists ? JSON.parse(storedLists) : initialCheckLists;
+  };
+
+  const [checkLists, setCheckLists] = useState(getInitialCheckLists);
   const [newListTitle, setNewListTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+
+  // 목록이 변경될 때마다 로컬 스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem('checkLists', JSON.stringify(checkLists));
+  }, [checkLists]);
+  // 콘솔 창에서 로컬 스토리지 확인용
+  console.log("Loading from localStorage:", getInitialCheckLists());
 
   // 검색 기능 구현
   const handleSearch = (e) => {
