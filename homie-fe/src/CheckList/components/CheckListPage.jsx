@@ -4,6 +4,7 @@ import TodoList from './TodoList';
 import NewCheckList from './NewCheckList';
 import '../css/checkListPage.css';
 
+
 const CheckListPage = () => {
   const initialTodos = {
     1: [
@@ -14,13 +15,13 @@ const CheckListPage = () => {
       { id: 5, text: '인터넷 요금', completed: false },
     ],
     2: [
-      { id: 6, text: '침대', completed: true },
+      { id: 6, text: '침대', completed: false },
       { id: 7, text: '냉장고', completed: false },
       { id: 8, text: '책상', completed: false },
     ],
     3: [
       { id: 9, text: '조명', completed: false },
-      { id: 10, text: '커튼', completed: true },
+      { id: 10, text: '커튼', completed: false },
     ],
   };
 
@@ -31,14 +32,14 @@ const CheckListPage = () => {
         ? JSON.parse(storedLists)
         : [
             { id: 1, title: '관리비 Check', count: 5 },
-            { id: 2, title: '자취 필수품', count: 10 },
+            { id: 2, title: '자취 필수품', count: 3 },
             { id: 3, title: '인테리어 쇼핑', count: 2 },
           ];
     } catch (error) {
       console.error('Failed to load checklists from localStorage:', error);
       return [
         { id: 1, title: '관리비 Check', count: 5 },
-        { id: 2, title: '자취 필수품', count: 10 },
+        { id: 2, title: '자취 필수품', count: 3 },
         { id: 3, title: '인테리어 쇼핑', count: 2 },
       ];
     }

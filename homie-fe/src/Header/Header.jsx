@@ -20,6 +20,13 @@ const Header = () => {
     navigate(path);
   };
 
+  const handleClearStorage = () => {
+    localStorage.clear();  // 전체 초기화
+    // localStorage.removeItem('checkLists');  // 특정 항목만 삭제하고 싶다면 이 줄을 사용하세요.
+    // localStorage.removeItem('todos_1');
+    alert('로컬 스토리지가 초기화되었습니다.');
+  };
+
   return (
     <header className="header">
       <button 
@@ -59,6 +66,7 @@ const Header = () => {
       </div>
 
       <button 
+        onClick={handleClearStorage}
         className="icon-button header-right"
         onMouseOver={(e) => e.currentTarget.classList.add('hover')}
         onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
