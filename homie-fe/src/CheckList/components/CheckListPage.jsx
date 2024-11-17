@@ -45,18 +45,39 @@ const CheckListPage = () => {
   };
 
   const [checkLists, setCheckLists] = useState(getInitialCheckLists);
-  const [selectedList, setSelectedList] = useState(
-    checkLists.length > 0 ? checkLists[0].id : null
-  );
-  const [listTitle, setListTitle] = useState(
-    checkLists.length > 0 ? checkLists[0].title : ''
-  );
+  const [selectedList, setSelectedList] = useState(null); // 초기값을 null로 설정합니다.
+  const [listTitle, setListTitle] = useState('');
   const [todos, setTodos] = useState([]);
   const [viewMode, setViewMode] = useState('all');
   const [isCreating, setIsCreating] = useState(false);
 
+  // 초기 로드 시 checkLists와 todos를 설정하는 useEffect
+  useEffect(() => {
+    const storedCheckLists = localStorage.getItem('checkLists');
+    if (storedCheckLists) {
+      const parsedCheckLists = JSON.parse(storedCheckLists);
+      setCheckLists(parsedCheckLists);
 
-  
+      // checkLists의 첫 번째 항목을 선택.
+      if (parsedCheckLists.length > 0) {
+        const firstList = parsedCheckLists[0];
+        setSelectedList(firstList.id);
+        setListTitle(firstList.title);
+
+        // 첫 번째 리스트의 todos를 불러옵니다.
+        const storedTodos = localStorage.getItem(`todos_${firstList.id}`);
+        if (storedTodos) {
+          setTodos(JSON.parse(storedTodos));
+        } else {
+          const initialListTodos = initialTodos[firstList.id] || [];
+          setTodos(initialListTodos);
+          localStorage.setItem(`todos_${firstList.id}`, JSON.stringify(initialListTodos));
+        }
+      }
+    }
+  }, []);
+
+  // selectedList가 변경될 때마다 todos를 불러오는 useEffect
   useEffect(() => {
     if (selectedList !== null) {
       const storedTodos = localStorage.getItem(`todos_${selectedList}`);
@@ -70,23 +91,21 @@ const CheckListPage = () => {
     }
   }, [selectedList]);
 
+  // todos 변경 시 로컬 스토리지에 저장하고 count를 업데이트하는 useEffect
   useEffect(() => {
     if (selectedList !== null) {
+      // todos가 변경될 때마다 로컬 스토리지에 저장
       localStorage.setItem(`todos_${selectedList}`, JSON.stringify(todos));
 
-      // count 업데이트
+      // count 업데이트 및 checkLists 로컬 스토리지 저장
       const activeCount = todos.filter(todo => !todo.completed).length;
-      setCheckLists(prevCheckLists =>
-        prevCheckLists.map(list =>
-          list.id === selectedList ? { ...list, count: activeCount } : list
-        )
+      const updatedCheckLists = checkLists.map(list =>
+        list.id === selectedList ? { ...list, count: activeCount } : list
       );
+      setCheckLists(updatedCheckLists);
+      localStorage.setItem('checkLists', JSON.stringify(updatedCheckLists));
     }
   }, [todos, selectedList]);
-
-  useEffect(() => {
-    localStorage.setItem('checkLists', JSON.stringify(checkLists));
-  }, [checkLists]);
 
   const handleSelectList = (id, title) => {
     setSelectedList(id);
