@@ -21,10 +21,13 @@ const Header = () => {
   };
 
   const handleClearStorage = () => {
-    localStorage.clear();  // 전체 초기화
-    // localStorage.removeItem('checkLists');  // 특정 항목만 삭제하고 싶다면 이 줄을 사용하세요.
-    // localStorage.removeItem('todos_1');
-    alert('로컬 스토리지가 초기화되었습니다.');
+    const confirmed = window.confirm("전체 목록을 초기화하시겠습니까?");
+    if (confirmed) {
+      localStorage.clear();  // 전체 초기화
+      // localStorage.removeItem('checkLists');  // 특정 항목만 삭제
+      // localStorage.removeItem('todos_1');
+      alert('전체 목록이 초기화되었습니다.');
+    }
   };
 
   return (
