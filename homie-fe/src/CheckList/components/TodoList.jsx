@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/todoList.css';
 
-const TodoList = ({ listId, viewMode }) => {
+const TodoList = ({ listId, viewMode, listTitle }) => { // listTitle 추가
   const [todos, setTodos] = useState([]); // 초기 todos 상태
   const [newTodo, setNewTodo] = useState(''); // 새로운 todo 입력값
 
@@ -72,13 +72,7 @@ const TodoList = ({ listId, viewMode }) => {
   return (
     <div className="todo-container">
       <div className="todo-header">
-        <h2 className="todo-title">
-          {listId === 1
-            ? '관리비 Check'
-            : listId === 2
-            ? '자취 필수품'
-            : '인테리어 쇼핑'}
-        </h2>
+        <h2 className="todo-title">{listTitle}</h2> {/* 동적으로 제목 표시 */}
         <span className="todo-count">{activeTodoCount}</span>
       </div>
 

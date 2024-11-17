@@ -31,36 +31,34 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
     setCheckLists(initialCheckLists);
   };
 
-// 새로운 목록 추가
-const handleAddNewList = () => {
-      if (newListTitle.trim()) {
-        const newList = {
-          id: Date.now(), // 고유 ID 생성
-          title: newListTitle.trim(),
-          count: 0, // 초기 count 값 설정
-        };
-        setCheckLists([newList, ...checkLists]); // 새로운 목록을 맨 위에 추가
-        setNewListTitle('');
-        setIsAdding(false);
-        onSelectList(newList.id); // 새로 추가된 목록을 선택
-      }
-    };
+  // 새로운 목록 추가
+  const handleAddNewList = () => {
+    if (newListTitle.trim()) {
+      const newList = {
+        id: Date.now(), // 고유 ID 생성
+        title: newListTitle.trim(),
+        count: 0, // 초기 count 값 설정
+      };
+      setCheckLists([newList, ...checkLists]); // 새로운 목록을 맨 위에 추가
+      setNewListTitle('');
+      setIsAdding(false);
+      onSelectList(newList.id, newList.title); // 새로 추가된 목록 선택
+    }
+  };
 
   // 목록 삭제
-// 목록 삭제
-const handleDeleteList = (id) => {
-      const updatedLists = checkLists.filter((list) => list.id !== id);
-      setCheckLists(updatedLists);
-    
-      // 삭제된 목록이 현재 선택된 목록이라면 초기화 또는 첫 번째 항목 선택
-      if (selectedList === id) {
-        if (updatedLists.length > 0) {
-          onSelectList(updatedLists[0].id); // 첫 번째 리스트 선택
-        } else {
-          onSelectList(null); // 선택된 리스트 없음
-        }
+  const handleDeleteList = (id) => {
+    const updatedLists = checkLists.filter((list) => list.id !== id);
+    setCheckLists(updatedLists);
+
+    if (selectedList === id) {
+      if (updatedLists.length > 0) {
+        onSelectList(updatedLists[0].id, updatedLists[0].title); // 첫 번째 리스트 선택
+      } else {
+        onSelectList(null, ''); // 선택된 리스트 없음
       }
-    };
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -104,7 +102,7 @@ const handleDeleteList = (id) => {
           <div key={list.id} className="nav-item-container">
             <button
               className={`nav-item ${selectedList === list.id ? 'active' : ''}`}
-              onClick={() => onSelectList(list.id)}
+              onClick={() => onSelectList(list.id, list.title)}
             >
               <span>{list.title}</span>
               <span className="count">{list.count}</span>
