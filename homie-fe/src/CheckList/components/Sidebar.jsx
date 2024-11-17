@@ -6,74 +6,78 @@ const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => 
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  const initialCheckLists = [
-    { id: 1, title: '관리비 Check', count: 5 },
-    { id: 2, title: '자취 필수품', count: 10 },
-    { id: 3, title: '인테리어 쇼핑', count: 2 },
-  ];
-
   // 로컬 스토리지에서 초기값 가져오기
   const getInitialCheckLists = () => {
     const storedLists = localStorage.getItem('checkLists');
-    return storedLists ? JSON.parse(storedLists) : initialCheckLists;
+    return storedLists
+      ? JSON.parse(storedLists)
+      : [
+          { id: 1, title: '관리비 Check', count: 5 },
+          { id: 2, title: '자취 필수품', count: 10 },
+          { id: 3, title: '인테리어 쇼핑', count: 2 },
+        ];
   };
 
-  const [checkLists, setCheckLists] = useState(getInitialCheckLists);
+  const [checkLists, setCheckLists] = useState(getInitialCheckLists());
+  const [filteredLists, setFilteredLists] = useState(checkLists); // 검색 결과를 저장
   const [newListTitle, setNewListTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
   // 목록이 변경될 때마다 로컬 스토리지에 저장
   useEffect(() => {
     localStorage.setItem('checkLists', JSON.stringify(checkLists));
+    setFilteredLists(checkLists); // 목록이 변경될 때 검색 결과도 동기화
   }, [checkLists]);
-  // 콘솔 창에서 로컬 스토리지 확인용
-  console.log("Loading from localStorage:", getInitialCheckLists());
 
   // 검색 기능 구현
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
-      const filteredLists = initialCheckLists.filter((list) =>
-        list.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setCheckLists(filteredLists);
+      if (searchTerm.trim() === '') {
+        setFilteredLists(checkLists); // 검색어가 없으면 전체 목록 표시
+      } else {
+        const filtered = checkLists.filter((list) =>
+          list.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredLists(filtered); // 검색 결과 저장
+      }
     }
   };
 
+  // 원상태로 되돌릴 때 로컬 스토리지에서 데이터 복원
   const resetSearch = () => {
     setSearchTerm('');
-    setCheckLists(initialCheckLists);
+    setFilteredLists(checkLists); // 로컬 스토리지에서 복원된 데이터 표시
   };
 
-// 새로운 목록 추가
-const handleAddNewList = () => {
-      if (newListTitle.trim()) {
-        const newList = {
-          id: Date.now(), // 고유 ID 생성
-          title: newListTitle.trim(),
-          count: 0, // 초기 count 값 설정
-        };
-        setCheckLists([newList, ...checkLists]); // 새로운 목록을 맨 위에 추가
-        setNewListTitle('');
-        setIsAdding(false);
-        onSelectList(newList.id); // 새로 추가된 목록을 선택
-      }
-    };
+  // 새로운 목록 추가
+  const handleAddNewList = () => {
+    if (newListTitle.trim()) {
+      const newList = {
+        id: Date.now(), // 고유 ID 생성
+        title: newListTitle.trim(),
+        count: 0, // 초기 count 값 설정
+      };
+      const updatedLists = [newList, ...checkLists];
+      setCheckLists(updatedLists); // 목록 업데이트
+      setNewListTitle('');
+      setIsAdding(false);
+      onSelectList(newList.id, newList.title); // 새로 추가된 목록 선택
+    }
+  };
 
   // 목록 삭제
-// 목록 삭제
-const handleDeleteList = (id) => {
-      const updatedLists = checkLists.filter((list) => list.id !== id);
-      setCheckLists(updatedLists);
-    
-      // 삭제된 목록이 현재 선택된 목록이라면 초기화 또는 첫 번째 항목 선택
-      if (selectedList === id) {
-        if (updatedLists.length > 0) {
-          onSelectList(updatedLists[0].id); // 첫 번째 리스트 선택
-        } else {
-          onSelectList(null); // 선택된 리스트 없음
-        }
+  const handleDeleteList = (id) => {
+    const updatedLists = checkLists.filter((list) => list.id !== id);
+    setCheckLists(updatedLists);
+
+    if (selectedList === id) {
+      if (updatedLists.length > 0) {
+        onSelectList(updatedLists[0].id, updatedLists[0].title); // 첫 번째 리스트 선택
+      } else {
+        onSelectList(null, ''); // 선택된 리스트 없음
       }
-    };
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -113,11 +117,11 @@ const handleDeleteList = (id) => {
       <h2 className="section-title">나의 목록</h2>
 
       <div className="checklist-nav">
-        {checkLists.map((list) => (
+        {filteredLists.map((list) => (
           <div key={list.id} className="nav-item-container">
             <button
               className={`nav-item ${selectedList === list.id ? 'active' : ''}`}
-              onClick={() => onSelectList(list.id)}
+              onClick={() => onSelectList(list.id, list.title)}
             >
               <span>{list.title}</span>
               <span className="count">{list.count}</span>
@@ -127,7 +131,7 @@ const handleDeleteList = (id) => {
               onClick={() => handleDeleteList(list.id)}
               aria-label="삭제"
             >
-              🗑️
+              X
             </button>
           </div>
         ))}
