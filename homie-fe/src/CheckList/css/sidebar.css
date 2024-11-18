@@ -1,25 +1,26 @@
-/* src/CheckList/css/sidebar.css */
+/* Sidebar Container */
 .sidebar {
       width: 300px;
       height: 100vh;
       background-color: #DFE1E5;
       padding: 20px;
-      font-family: "PyeongChang Peace";
+      font-family: "PyeongChang Peace", sans-serif;
       position: relative;
       border-right: 1px solid #eee;
       display: flex;
       flex-direction: column;
 }
 
+/* Sidebar Title */
 .sidebar-title {
       text-align: center;
       font-size: 20px;
-      font-style: normal;
       font-weight: 700;
-      line-height: normal;
       margin-bottom: 18px;
+      color: #333;
 }
 
+/* Search Bar */
 .search-container {
       display: flex;
       justify-content: center;
@@ -31,48 +32,39 @@
       padding: 10px 15px;
       border: none;
       border-radius: 8px;
-      background-color: white;
+      background-color: #fff;
       font-size: 16px;
-      font-family: "PyeongChang";
+      font-family: "PyeongChang", sans-serif;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 통계 버튼 스타일 수정 */
+/* Stats Section */
 .stats-container {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-bottom: 30px;
-      padding: 0 10px;
 }
 
 .stat-box {
       flex: 1;
-      background-color: white;
+      background-color: #fff;
       padding: 12px 24px;
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
       color: #424344;
-      font-family: "PyeongChang Peace";
       font-size: 20px;
-      font-style: normal;
       font-weight: 700;
-      line-height: normal;
-      text-transform: capitalize;
 }
 
 .stat-box:hover {
       background-color: #f0f0f0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.stat-number {
-      display: block;
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 5px;
-}
-
+/* Section Title */
 .section-title {
       font-size: 14px;
       color: #A5A7AA;
@@ -81,6 +73,19 @@
       text-align: left;
       border-bottom: 1px solid #ddd;
       padding-bottom: 10px;
+}
+
+
+/* Navigation Items */
+.nav-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+      font-family: "PyeongChang", sans-serif;
 }
 
 .nav-item {
@@ -95,12 +100,12 @@
       font-family: "PyeongChang";
       text-align: left;
 }
-
 .nav-item.active {
       background-color: white;
       border-radius: 8px;
 }
 
+/* Home Button */
 .home-button {
       position: absolute;
       width: 80%;
@@ -110,33 +115,39 @@
       padding: 15px 30px;
       border: none;
       border-radius: 8px;
-      background-color: white;
-      font-family: "PyeongChang Peace";
+      background-color: #fff;
+      font-family: "PyeongChang Peace", sans-serif;
       cursor: pointer;
-      white-space: nowrap;
+      text-align: center;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
 }
-/* 새 목록 추가 버튼 */
+
+.home-button:hover {
+      background-color: #f7f7f7;
+}
+
+/* Add Button */
 .add-button {
       width: 100%;
       padding: 12px 15px;
       background-color: #007BFF;
-      color: white;
+      color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
       font-weight: 700;
-      font-family: "PyeongChang Peace";
-      text-align: center;
       margin-top: 20px;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-button:hover {
       background-color: #0056b3;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 목록 삭제 버튼 */
+/* Delete Button */
 .delete-list-button {
       font-size: 20px;
       color: #E74C3C;
@@ -150,36 +161,36 @@
       color: #C0392B;
 }
 
-/* 새로운 목록 입력 필드 */
+/* Input Fields */
 .new-list-input {
       width: 100%;
       padding: 12px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      background-color: white;
+      background-color: #fff;
       font-size: 16px;
       margin-top: 15px;
-      font-family: "PyeongChang";
+      font-family: "PyeongChang", sans-serif;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 저장 및 취소 버튼 */
+/* Save and Cancel Buttons */
 .save-button,
 .cancel-button {
       width: 48%;
       padding: 10px 15px;
-      border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-family: "PyeongChang Peace";
+      font-family: "PyeongChang Peace", sans-serif;
       font-size: 16px;
       font-weight: 700;
       text-align: center;
+      transition: background-color 0.3s ease;
 }
 
 .save-button {
       background-color: #28A745;
-      color: white;
-      transition: background-color 0.3s ease;
+      color: #fff;
 }
 
 .save-button:hover {
@@ -188,23 +199,14 @@
 
 .cancel-button {
       background-color: #FFC107;
-      color: white;
-      transition: background-color 0.3s ease;
+      color: #fff;
 }
 
 .cancel-button:hover {
       background-color: #E0A800;
 }
 
-/* 추가 목록 입력 및 버튼 컨테이너 */
-.add-new-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-}
-
-/* 검색 초기화 버튼 */
+/* Reset Button */
 .reset-button {
       position: absolute;
       right: 15px;
@@ -222,7 +224,7 @@
       color: #424344;
 }
 
-/* 삭제 버튼과 목록 컨테이너 */
+/* Navigation Container */
 .nav-item-container {
       display: flex;
       justify-content: space-between;
@@ -233,10 +235,4 @@
 
 .nav-item-container:last-child {
       border-bottom: none;
-}
-
-/* 홈 버튼 개선 */
-.home-button:hover {
-      background-color: #f0f0f0;
-      transition: background-color 0.3s ease;
 }
