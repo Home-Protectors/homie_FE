@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';  // useNavigate 추가
-import { Heart, Home } from 'lucide-react';  // Home 추가
+import { Home } from 'lucide-react';  // Home 추가
 import '../css/item.css';
 
 import id1 from '../image/id1.png';
@@ -319,14 +319,7 @@ const Item = ({ initialCategory = '전체' }) => {
         setSelectedCategory(category.id);
         navigate(category.path);
       };
-    
-      const toggleFavorite = (itemId) => {
-        setFavorites(prev => 
-          prev.includes(itemId)
-            ? prev.filter(id => id !== itemId)
-            : [...prev, itemId]
-        );
-      };
+  
     
       return (
         <div className="item-screen">
@@ -355,16 +348,7 @@ const Item = ({ initialCategory = '전체' }) => {
                   </button>
                 ))}
     
-                <button 
-                  className="item-favorite-button"
-                  aria-label="즐겨찾기"
-                >
-                  <Heart 
-                    size={24}
-                    color="white"
-                    fill={favorites.length > 0 ? 'white' : 'none'}
-                  />
-                </button>
+                
               </div>
             </nav>
     
@@ -387,19 +371,7 @@ const Item = ({ initialCategory = '전체' }) => {
                       alt={item.name}
                       className="item-image"
                     />
-                    <button
-                      onClick={() => toggleFavorite(item.id)}
-                      className="item-favorite-button"
-                      aria-label={`${item.name} 즐겨찾기 ${favorites.includes(item.id) ? '제거' : '추가'}`}
-                    >
-                      <Heart 
-                        size={20}
-                        style={{ 
-                          color: '#333333',
-                          fill: favorites.includes(item.id) ? '#333333' : 'none'
-                        }}
-                      />
-                    </button>
+                    
                   </div>
                   <span className="item-brand">{item.brand}</span>
                   <span className="item-name">{item.name}</span>
