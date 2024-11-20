@@ -28,47 +28,7 @@ const IntroPage = () => {
         </div>
       </div>
 
-      {/* 하단 버튼 섹션 */}
-      <div className="bottom-section">
-        <div className="bottom-frame">
-          <div className="button-grid">
-            <div className="grid-row">
-              <button 
-                className="grid-button"
-                onClick={() => navigate('/detailInfo/expense-plan')}>
-                  자취 비용 계획
-              </button>
-              <button 
-                className="grid-button" 
-                onClick={() => navigate('/detailInfo/house-viewing')}>
-                  집 보러 가기
-              </button>
-              <button 
-                className="grid-button" 
-                onClick={() => navigate('/detailInfo/house-types')}>
-                  주택의 종류와 개념
-              </button>
-            </div>
-            <div className="grid-row">
-              <button 
-                className="grid-button" 
-                onClick={() => navigate('/detailInfo/pre-contract')}>
-                  계약 전 확인하기
-              </button>
-              <button 
-                className="grid-button" 
-                onClick={() => navigate('/detailInfo/contract')}>
-                  계약하기
-              </button>
-              <button 
-                className="grid-button" 
-                onClick={() => navigate('/detailInfo/jeonse-info')}>
-                  전세에 대한 모든 것
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </div>
   );
 };
