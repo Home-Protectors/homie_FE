@@ -2,7 +2,7 @@
       text-align: center;
       position: relative;
       overflow-x: hidden;
-}
+    }
 
 .App-logo {
       height: 40vmin;
@@ -61,14 +61,13 @@
       overflow-x: hidden;
 }
 
+
 .page-container {
-      position: absolute;
+      margin-top: 80px; /* 헤더 높이만큼만 마진 추가 */
+      position: relative;
       width: 100%;
       min-height: calc(100vh - 80px);
-      /* header 높이만큼 빼기 */
-      left: 0;
-      right: 0;
-}
+    }
 
 /* 슬라이드 전환 */
 /* 페이지 진입 애니메이션 */
