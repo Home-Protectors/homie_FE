@@ -163,6 +163,32 @@
   border-color: #00509B;
 }
 
+/*타이핑 효과 쪽 css*/
+.welcome-message {
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.welcome-message.visible {
+  opacity: 1;
+}
+
+.welcome-line {
+  font-family: "PyeongChang Peace", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  margin: 0.5rem 0;
+  min-height: 36px;
+}
+
+/* 자취봇 강조 스타일 */
+.highlight {
+  color: #18D2D6;
+  transition: color 0.01s ease;
+}
+
 .scroll-button {
   position: absolute;
   right: 10px;
