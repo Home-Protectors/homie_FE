@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/introPage.css';
 
 const IntroPage = () => {
@@ -11,6 +12,8 @@ const IntroPage = () => {
   const [typedText1, setTypedText1] = useState('');
   const [typedText2, setTypedText2] = useState('');
   const [messageVisible, setMessageVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const welcomeText1 = "자취에 대한 모든 것을 물어보세요!";
   const welcomeText2 = "저희 자취봇이 모든 것을 알려드립니다!";
@@ -155,8 +158,12 @@ const IntroPage = () => {
           <img src="/house.png" alt="집 이미지" className="house-image" />
         </div>
         <div className={`side-buttons ${isAnimated ? 'fade-in' : ''}`}>
-          <img src="/checkButton.png" alt="자취 체크리스트" className="side-button" />
-          <img src="/itemButton.png" alt="자취팁 추천" className="side-button" />
+          <img src="/checkButton.png" alt="자취 체크리스트" className="side-button" 
+           onClick={() => navigate('/checklist')}
+          />
+          <img src="/itemButton.png" alt="자취팁 추천" className="side-button" 
+           onClick={() => navigate('/tips')}
+          />
         </div>
       </div>
 
