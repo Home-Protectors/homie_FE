@@ -1,3 +1,5 @@
+/* src/CheckList/components/Sidebar.jsx */
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/sidebar.css';
@@ -16,6 +18,21 @@ const Sidebar = ({
   const [newListTitle, setNewListTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const navigate = useNavigate();
+
+  //목록 선택 인덱스 확인
+  const getSelectedIndex = () => {
+      return filteredLists.findIndex(list => list.id === selectedList);
+  };
+
+  //목록인덱스값과 크기를 곱하여 사각형 이동거리 계산
+  const getIndicatorStyle = () => {
+      const selectedIndex = getSelectedIndex();
+      if (selectedIndex === -1) return {};
+      return {
+        transform: `translateY(${selectedIndex * 45}px)`, // 45px is the height of each item
+        opacity: selectedIndex === -1 ? 0 : 1
+      };
+    };
 
   // Sync filtered lists when checkLists changes
   useEffect(() => {
@@ -97,6 +114,7 @@ const Sidebar = ({
       <h2 className="section-title">나의 목록</h2>
 
       <div className="checklist-nav">
+       <div className="nav-selection-indicator" style={getIndicatorStyle()} />
         {filteredLists.map((list) => (
           <div key={list.id} className="nav-item-container">
             <button
@@ -111,7 +129,7 @@ const Sidebar = ({
               onClick={() => handleDeleteList(list.id)}
               aria-label="삭제"
             >
-              X
+              🗑️
             </button>
           </div>
         ))}

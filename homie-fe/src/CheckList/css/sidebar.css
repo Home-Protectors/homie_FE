@@ -1,3 +1,5 @@
+/* src/CheckList/css/sidebar.css */
+
 /* Sidebar Container */
 .sidebar {
       width: 300px;
@@ -71,38 +73,79 @@
       margin: 20px 0 10px 0;
       padding: 0;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #c1c0c0;
       padding-bottom: 10px;
 }
 
-
-/* Navigation Items */
-.nav-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      background: none;
-      font-family: "PyeongChang", sans-serif;
+/* Navigation Container needs relative positioning */
+.checklist-nav {
+      position: relative;
+      margin-top: 0px 0;
+      margin-bottom: 20px;
 }
 
+/* Selection indicator - white background that moves */
+.nav-selection-indicator {
+      position: absolute;
+      width: calc(100% - 40px); /* Adjust based on your padding/margins */
+      height: 45px;
+      background-color: white;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      pointer-events: none; /* So it doesn't interfere with clicks */
+}
+
+/* Navigation Items - Remove active background */
 .nav-item {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px;
+      border-radius: 8px;
       border: none;
-      background: none;
       cursor: pointer;
+      background: none;
       font-family: "PyeongChang";
       text-align: left;
+      position: relative;
+      z-index: 1; /* Ensure content stays above the moving background */
 }
+
 .nav-item.active {
-      background-color: white;
+      background-color: transparent;
       border-radius: 8px;
+      height: 45px;
+      animation: slideDown 0.3s ease-in-out;
+}
+
+.nav-item:not(.active) {
+      animation: slideUp 0.3s ease-in-out;
+}
+
+
+
+/* Navigation Container */
+.nav-item-container {
+      height: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      position: relative;
+     
+      transform-origin: top;
+      transition: transform 0.3s ease-in-out;
+}
+
+.nav-item-container:last-child {
+      border-bottom: none;
+}
+
+/* Optional: Add hover effect */
+.nav-item:hover:not(.active) {
+      transform: translateY(-2px);
+      background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Home Button */
@@ -144,16 +187,17 @@
 
 .add-button:hover {
       background-color: #0056b3;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 15px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Delete Button */
 .delete-list-button {
-      font-size: 20px;
+      font-size: 13px;
       color: #E74C3C;
       background: none;
       border: none;
       cursor: pointer;
+      margin-left: 7px;
       transition: color 0.3s ease;
 }
 
@@ -163,12 +207,13 @@
 
 
 .new-list-input {
-      width: calc(100% - 24px); 
+      width: calc(100% - 20px);
+      height: 40px;
       padding: 12px 15px; 
       border: 1px solid #ddd;
       border-radius: 8px;
       background-color: #fff;
-      font-size: 16px; 
+      font-size: 12px; 
       margin-top: 15px;
       font-family: "PyeongChang", sans-serif;
       box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
@@ -178,14 +223,19 @@
 /* Save and Cancel Buttons */
 .save-button,
 .cancel-button {
-      width: 48%;
+      width: 45%;
       padding: 10px 15px;
       border-radius: 8px;
       cursor: pointer;
       font-family: "PyeongChang Peace", sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       text-align: center;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+      border: none;
+      box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease;
 }
 
@@ -223,17 +273,4 @@
 
 .reset-button:hover {
       color: #424344;
-}
-
-/* Navigation Container */
-.nav-item-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-}
-
-.nav-item-container:last-child {
-      border-bottom: none;
 }
