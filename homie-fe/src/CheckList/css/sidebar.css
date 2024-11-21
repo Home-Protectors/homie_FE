@@ -1,25 +1,28 @@
 /* src/CheckList/css/sidebar.css */
+
+/* Sidebar Container */
 .sidebar {
       width: 300px;
       height: 100vh;
       background-color: #DFE1E5;
       padding: 20px;
-      font-family: "PyeongChang Peace";
+      font-family: "PyeongChang Peace", sans-serif;
       position: relative;
       border-right: 1px solid #eee;
       display: flex;
       flex-direction: column;
 }
 
+/* Sidebar Title */
 .sidebar-title {
       text-align: center;
       font-size: 20px;
-      font-style: normal;
       font-weight: 700;
-      line-height: normal;
       margin-bottom: 18px;
+      color: #333;
 }
 
+/* Search Bar */
 .search-container {
       display: flex;
       justify-content: center;
@@ -31,76 +34,121 @@
       padding: 10px 15px;
       border: none;
       border-radius: 8px;
-      background-color: white;
+      background-color: #fff;
       font-size: 16px;
-      font-family: "PyeongChang";
+      font-family: "PyeongChang", sans-serif;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 통계 버튼 스타일 수정 */
+/* Stats Section */
 .stats-container {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-bottom: 30px;
-      padding: 0 10px;
 }
 
 .stat-box {
       flex: 1;
-      background-color: white;
+      background-color: #fff;
       padding: 12px 24px;
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
       color: #424344;
-      font-family: "PyeongChang Peace";
       font-size: 20px;
-      font-style: normal;
       font-weight: 700;
-      line-height: normal;
-      text-transform: capitalize;
 }
 
 .stat-box:hover {
       background-color: #f0f0f0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.stat-number {
-      display: block;
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 5px;
-}
-
+/* Section Title */
 .section-title {
       font-size: 14px;
       color: #A5A7AA;
       margin: 20px 0 10px 0;
       padding: 0;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #c1c0c0;
       padding-bottom: 10px;
 }
 
+/* Navigation Container needs relative positioning */
+.checklist-nav {
+      position: relative;
+      margin-top: 0px 0;
+      margin-bottom: 20px;
+}
+
+/* Selection indicator - white background that moves */
+.nav-selection-indicator {
+      position: absolute;
+      width: calc(100% - 40px); /* Adjust based on your padding/margins */
+      height: 45px;
+      background-color: white;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      pointer-events: none; /* So it doesn't interfere with clicks */
+}
+
+/* Navigation Items - Remove active background */
 .nav-item {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px;
+      border-radius: 8px;
       border: none;
-      background: none;
       cursor: pointer;
+      background: none;
       font-family: "PyeongChang";
       text-align: left;
+      position: relative;
+      z-index: 1; /* Ensure content stays above the moving background */
 }
 
 .nav-item.active {
-      background-color: white;
+      background-color: transparent;
       border-radius: 8px;
+      height: 45px;
+      animation: slideDown 0.3s ease-in-out;
 }
 
+.nav-item:not(.active) {
+      animation: slideUp 0.3s ease-in-out;
+}
+
+
+
+/* Navigation Container */
+.nav-item-container {
+      height: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      position: relative;
+     
+      transform-origin: top;
+      transition: transform 0.3s ease-in-out;
+}
+
+.nav-item-container:last-child {
+      border-bottom: none;
+}
+
+/* Optional: Add hover effect */
+.nav-item:hover:not(.active) {
+      transform: translateY(-2px);
+      background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Home Button */
 .home-button {
       position: absolute;
       width: 80%;
@@ -110,8 +158,119 @@
       padding: 15px 30px;
       border: none;
       border-radius: 8px;
-      background-color: white;
-      font-family: "PyeongChang Peace";
+      background-color: #fff;
+      font-family: "PyeongChang Peace", sans-serif;
       cursor: pointer;
-      white-space: nowrap;
+      text-align: center;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+      background-color: #f7f7f7;
+}
+
+/* Add Button */
+.add-button {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-button:hover {
+      background-color: #0056b3;
+      box-shadow: 15px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Button */
+.delete-list-button {
+      font-size: 13px;
+      color: #E74C3C;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 7px;
+      transition: color 0.3s ease;
+}
+
+.delete-list-button:hover {
+      color: #C0392B;
+}
+
+
+.new-list-input {
+      width: calc(100% - 20px);
+      height: 40px;
+      padding: 12px 15px; 
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      font-size: 12px; 
+      margin-top: 15px;
+      font-family: "PyeongChang", sans-serif;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box; 
+}
+
+/* Save and Cancel Buttons */
+.save-button,
+.cancel-button {
+      width: 45%;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: "PyeongChang Peace", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+      border: none;
+      box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+}
+
+.save-button {
+      background-color: #28A745;
+      color: #fff;
+}
+
+.save-button:hover {
+      background-color: #218838;
+}
+
+.cancel-button {
+      background-color: #FFC107;
+      color: #fff;
+}
+
+.cancel-button:hover {
+      background-color: #E0A800;
+}
+
+/* Reset Button */
+.reset-button {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #A5A7AA;
+      transition: color 0.3s ease;
+}
+
+.reset-button:hover {
+      color: #424344;
 }

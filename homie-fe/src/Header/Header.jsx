@@ -20,6 +20,16 @@ const Header = () => {
     navigate(path);
   };
 
+  const handleClearStorage = () => {
+    const confirmed = window.confirm("전체 목록을 초기화하시겠습니까?");
+    if (confirmed) {
+      localStorage.clear();  // 전체 초기화
+      // localStorage.removeItem('checkLists');  // 특정 항목만 삭제
+      // localStorage.removeItem('todos_1');
+      alert('전체 목록이 초기화되었습니다.');
+    }
+  };
+
   return (
     <div className = "header-container">
     <header className="header">
@@ -60,6 +70,7 @@ const Header = () => {
       </div>
 
       <button 
+        onClick={handleClearStorage}
         className="icon-button header-right"
         onMouseOver={(e) => e.currentTarget.classList.add('hover')}
         onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}

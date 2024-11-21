@@ -1,79 +1,170 @@
-// src/CheckList/components/Sidebar.jsx
-import React, { useState } from 'react';
+/* src/CheckList/components/Sidebar.jsx */
+
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/sidebar.css';
 
-const Sidebar = ({ onSelectList, selectedList, onViewAll, onViewCompleted }) => {
-      const [searchTerm, setSearchTerm] = useState('');
-      const navigate = useNavigate();
+const Sidebar = ({
+  checkLists,
+  onSelectList,
+  selectedList,
+  onViewAll,
+  onViewCompleted,
+  onCreateList,
+  onDeleteList,
+}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredLists, setFilteredLists] = useState(checkLists); // Filtered search results
+  const [newListTitle, setNewListTitle] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+  const navigate = useNavigate();
 
-      const [checkLists, setCheckLists] = useState([
-            { id: 1, title: '관리비 Check', count: 5 },
-            { id: 2, title: '자취 필수품', count: 10 },
-            { id: 3, title: '인테리어 쇼핑', count: 2 }
-      ]);
+  //목록 선택 인덱스 확인
+  const getSelectedIndex = () => {
+      return filteredLists.findIndex(list => list.id === selectedList);
+  };
 
-      // 검색 기능 구현
-      const handleSearch = (e) => {
-            if (e.key === 'Enter') {
-                  const filteredLists = checkLists.filter(list =>
-                        list.title.toLowerCase().includes(searchTerm.toLowerCase())
-                  );
-                  setCheckLists(filteredLists);
-            }
+  //목록인덱스값과 크기를 곱하여 사각형 이동거리 계산
+  const getIndicatorStyle = () => {
+      const selectedIndex = getSelectedIndex();
+      if (selectedIndex === -1) return {};
+      return {
+        transform: `translateY(${selectedIndex * 45}px)`, // 45px is the height of each item
+        opacity: selectedIndex === -1 ? 0 : 1
       };
+    };
 
-      return (
-            <div className="sidebar">
-                  <h1 className="sidebar-title">자취 CheckList</h1>
+  // Sync filtered lists when checkLists changes
+  useEffect(() => {
+    setFilteredLists(checkLists);
+  }, [checkLists]);
 
-                  <div className="search-container">
-                        <input
-                              type="text"
-                              placeholder="검색"
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                              onKeyPress={handleSearch}
-                              className="search-input"
-                        />
-                  </div>
+  // Search functionality
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      if (searchTerm.trim() === '') {
+        setFilteredLists(checkLists);
+      } else {
+        const filtered = checkLists.filter((list) =>
+          list.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredLists(filtered);
+      }
+    }
+  };
 
-                  <div className="stats-container">
-                        <button
-                              className="stat-box"
-                              onClick={onViewAll}
-                        >
-                              ALL
-                        </button>
-                        <button
-                              className="stat-box"
-                              onClick={onViewCompleted}
-                        >
-                              DONE
-                        </button>
-                  </div>
+  // Reset search input
+  const resetSearch = () => {
+    setSearchTerm('');
+    setFilteredLists(checkLists);
+  };
 
-                  <h2 className="section-title">나의 목록</h2>
+  // Add new checklist
+  const handleAddNewList = () => {
+    if (newListTitle.trim()) {
+      onCreateList(newListTitle.trim());
+      setNewListTitle('');
+      setIsAdding(false);
+    }
+  };
 
-                  <div className="checklist-nav">
-                        {checkLists.map(list => (
-                              <button
-                                    key={list.id}
-                                    className={`nav-item ${selectedList === list.id ? 'active' : ''}`}
-                                    onClick={() => onSelectList(list.id)}
-                              >
-                                    <span>{list.title}</span>
-                                    <span className="count">{list.count}</span>
-                              </button>
-                        ))}
-                  </div>
+  // Confirm and delete checklist
+  const handleDeleteList = (listId) => {
+    const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
+    if (isConfirmed) {
+      onDeleteList(listId);
+    }
+  };
 
-                  <button className="home-button" onClick={() => navigate('/')}>
-                        <span role="img" aria-label="home">🏠</span>
-                        {' '}홈으로 돌아가기
-                  </button>
-            </div>
-      );
+  return (
+    <div className="sidebar">
+      <h1 className="sidebar-title">자취 CheckList</h1>
+
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="검색"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={handleSearch}
+          className="search-input"
+        />
+        {searchTerm && (
+          <button className="reset-button" onClick={resetSearch}>
+            X
+          </button>
+        )}
+      </div>
+
+      <div className="stats-container">
+        <button
+          className={`stat-box ${selectedList === 'all' ? 'active' : ''}`}
+          onClick={onViewAll}
+        >
+          ALL
+        </button>
+        <button
+          className={`stat-box ${selectedList === 'done' ? 'active' : ''}`}
+          onClick={onViewCompleted}
+        >
+          DONE
+        </button>
+      </div>
+
+      <h2 className="section-title">나의 목록</h2>
+
+      <div className="checklist-nav">
+       <div className="nav-selection-indicator" style={getIndicatorStyle()} />
+        {filteredLists.map((list) => (
+          <div key={list.id} className="nav-item-container">
+            <button
+              className={`nav-item ${selectedList === list.id ? 'active' : ''}`}
+              onClick={() => onSelectList(list.id, list.title)}
+            >
+              <span>{list.title}</span>
+              <span className="count">{list.count}</span>
+            </button>
+            <button
+              className="delete-list-button"
+              onClick={() => handleDeleteList(list.id)}
+              aria-label="삭제"
+            >
+              🗑️
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {isAdding ? (
+        <div className="add-new-list">
+          <input
+            type="text"
+            placeholder="새로운 목록 이름"
+            value={newListTitle}
+            onChange={(e) => setNewListTitle(e.target.value)}
+            className="new-list-input"
+          />
+          <button className="save-button" onClick={handleAddNewList}>
+            저장
+          </button>
+          <button className="cancel-button" onClick={() => setIsAdding(false)}>
+            취소
+          </button>
+        </div>
+      ) : (
+        <button className="add-button" onClick={() => setIsAdding(true)}>
+          + 새로운 목록 만들기
+        </button>
+      )}
+
+      <button className="home-button" onClick={() => navigate('/')}>
+        <span role="img" aria-label="home">
+          🏠
+        </span>{' '}
+        홈으로 돌아가기
+      </button>
+    </div>
+  );
 };
 
 export default Sidebar;

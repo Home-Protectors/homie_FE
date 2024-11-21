@@ -1,50 +1,55 @@
-// src/CheckList/components/TodoList.jsx
 import React, { useState } from 'react';
 import '../css/todoList.css';
 
-const TodoList = ({ listId }) => {
-  const [todos, setTodos] = useState([
-    { id: 1, text: '월세', completed: false },
-    { id: 2, text: '가스비', completed: false },
-    { id: 3, text: '전기세', completed: false },
-    { id: 4, text: '수도세', completed: false },
-    { id: 5, text: '인터넷 요금', completed: false }
-  ]);
+const TodoList = ({ listId, viewMode, listTitle, todos, setTodos }) => {
+  const [newTodo, setNewTodo] = useState(''); // 새로운 todo 입력값
 
-  const [newTodo, setNewTodo] = useState('');
-  const activeTodoCount = todos.filter(todo => !todo.completed).length;
+  // 완료되지 않은 todo 개수 계산
+  const activeTodoCount = todos.filter((todo) => !todo.completed).length;
 
+  // 현재 viewMode에 따라 todos 필터링
+  const filteredTodos = todos.filter((todo) => {
+    if (viewMode === 'all') return true;
+    if (viewMode === 'completed') return todo.completed;
+    return false;
+  });
+
+  // todo 상태 토글
   const handleToggle = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
+  // 새로운 todo 추가
   const handleAddTodo = (e) => {
     if (e.key === 'Enter' && newTodo.trim() !== '') {
-      setTodos([...todos, {
+      const newTodoItem = {
         id: Date.now(),
         text: newTodo,
-        completed: false
-      }]);
-      setNewTodo('');
+        completed: false,
+      };
+      setTodos([...todos, newTodoItem]); // todos에 새로운 항목 추가
+      setNewTodo(''); // 입력값 초기화
     }
   };
 
-  // 삭제 기능 추가
+  // todo 삭제
   const handleDelete = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
     <div className="todo-container">
       <div className="todo-header">
-        <h2 className="todo-title">관리비 Check</h2>
+        <h2 className="todo-title">{listTitle}</h2> {/* 동적으로 제목 표시 */}
         <span className="todo-count">{activeTodoCount}</span>
       </div>
-      
+
       <div className="todo-list">
-        {todos.map(todo => (
+        {filteredTodos.map((todo) => (
           <div key={todo.id} className="todo-item">
             <label className="todo-label">
               <input
@@ -55,7 +60,7 @@ const TodoList = ({ listId }) => {
               <span className="checkmark"></span>
               <span className="todo-text">{todo.text}</span>
             </label>
-            <button 
+            <button
               className="delete-button"
               onClick={() => handleDelete(todo.id)}
               aria-label="삭제"
@@ -64,7 +69,7 @@ const TodoList = ({ listId }) => {
             </button>
           </div>
         ))}
-        
+
         <div className="add-todo">
           <input
             type="text"
