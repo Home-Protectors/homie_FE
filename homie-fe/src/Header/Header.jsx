@@ -21,6 +21,7 @@ const Header = () => {
   };
 
   return (
+    <div className = "header-container">
     <header className="header">
       <button 
         className="icon-button header-left" 
@@ -66,6 +67,7 @@ const Header = () => {
         <img src="/icons/settings.png" alt="설정" className="icon" />
       </button>
     </header>
+    </div>
   );
 };
 

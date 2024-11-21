@@ -4,12 +4,6 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Header from './Header/Header';
 import IntroPage from './Dic/components/IntroPage';
 import CheckListPage from './CheckList/components/CheckListPage';
-import ExpensePlanPage from './Dic/components/ExpensePlanPage';
-import HouseViewingPage from './Dic/components/HouseViewingPage';
-import HouseTypesPage from './Dic/components/HouseTypesPage';
-import PreContractPage from './Dic/components/PreContractPage';
-import ContractPage from './Dic/components/ContractPage';
-import JeonseInfoPage from './Dic/components/JeonseInfoPage';
 import Item from './Item/components/Item';
 import './App.css';
 
@@ -42,13 +36,6 @@ function AppContent() {
               <Route path="/tips/kitchen" element={<ItemWrapper category="주방용품" />} />
               <Route path="/tips/cleaning" element={<ItemWrapper category="청소용품" />} />
               <Route path="/tips/necessities" element={<ItemWrapper category="생필품" />} />
-              
-              <Route path="/detailInfo/expense-plan" element={<ExpensePlanPage />} />
-              <Route path="/detailInfo/house-viewing" element={<HouseViewingPage />} />
-              <Route path="/detailInfo/house-types" element={<HouseTypesPage />} />
-              <Route path="/detailInfo/pre-contract" element={<PreContractPage />} />
-              <Route path="/detailInfo/contract" element={<ContractPage />} />
-              <Route path="/detailInfo/jeonse-info" element={<JeonseInfoPage />} />
             </Routes>
           </div>
         </CSSTransition>

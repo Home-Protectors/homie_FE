@@ -1,150 +1,267 @@
-/* src/Dic/css/introPage.css */
 .intro-container {
-      position: relative;
-      width: 100%;
-      height: 90vh;
-      background-color: #00509B;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* 메인 섹션 스타일 */
-    .main-section {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 60vh;
-    }
-    
-    .main-content {
-      position: relative;
-      transition: all 1s ease-in-out;
-      left: 0;
-    }
-    
-    .main-content.slide-left {
-      left: -25vw;
-    }
-    
-    .house-image {
-      width: 35vw;
-      max-width: 600px;
-      height: auto;
-      object-fit: contain;
-    }
-    
-    /* 사이드 버튼 스타일 */
-    .side-buttons {
-      position: absolute;
-      right: -100%;
-      opacity: 0;
-      transition: all 1s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .side-buttons.fade-in {
-      right: 25%;
-      opacity: 1;
-    }
-    
-    .side-button {
-      width: 15vw;
-      max-width: 200px;
-      height: auto;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .side-button:hover {
-      transform: scale(1.05);
-    }
-    
-    /* 하단 섹션 스타일 */
-    .bottom-section {
-      width: 100%;
-      background-color: white;
-      padding: 2rem 0;
-      margin-top: auto;
-    }
-    
-    .bottom-frame {
-      width: 100%;
-      max-width: 1350px;
-      margin: 0 auto;
-      border: 4px solid #002887;
-      border-radius: 8px;
-      padding: 1.5rem;
-    }
-    
-    .button-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 124px;;
-    }
-    
-    .grid-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    
-    .grid-button {
-      height: 35px;
-      padding: 0 1.5rem;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      /* 폰트 스타일 추가 */
-      color: #000;
-      text-align: center;
-      font-family: "PyeongChang Peace";
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      
-      /* 트랜지션 */
-      transition: transform 0.3s ease;
-      white-space: nowrap;
-    }
-    
-    .grid-button:hover {
-      transform: scale(1.05);
-    }
-    
-    /* 반응형 디자인을 위한 미디어 쿼리 */
-    @media (max-width: 1024px) {
-      .house-image {
-        width: 45vw;
-      }
-      
-      .side-button {
-        width: 20vw;
-      }
-      
-      .bottom-frame {
-        width: 95%;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .house-image {
-        width: 55vw;
-      }
-      
-      .side-button {
-        width: 25vw;
-      }
-      
-      .grid-button {
-        font-size: 0.9rem;
-      }
-    }
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+/* 메인 섹션 스타일 */
+.main-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: #00509B;
+  align-items: center;
+  height: 60vh;
+  min-height: 400px;
+  will-change: transform;
+}
+
+.main-section::before {
+  content: '';
+  position: absolute;
+  top: 50px;  /* 상단 여백 */
+  left: 20px;  /* 좌측 여백 */
+  right: 20px;  /* 우측 여백 */
+  bottom: 50px;  /* 하단 여백 */
+  border: 2px solid white;
+  pointer-events: none;  /* 테두리가 클릭 이벤트를 방해하지 않도록 */
+}
+
+.main-content {
+  position: relative;
+  transition: all 1s ease-in-out;
+  left: 0;
+}
+
+.main-content.slide-left {
+  left: -25vw;
+}
+
+.house-image {
+  width: 35vw;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+}
+
+/*메인 섹션 내부 하얀 선 추가*/
+
+
+/* 사이드 버튼 스타일 */
+.side-buttons {
+  position: absolute;
+  right: -100%;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.side-buttons.fade-in {
+  right: 25%;
+  opacity: 1;
+}
+
+.side-button {
+  width: 15vw;
+  max-width: 200px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.side-button:hover {
+  transform: scale(1.05);
+}
+
+/* 새로운 채팅 섹션 스타일 */
+.chat-section {
+  position: relative; /* chat-form의 기준점이 됨 */
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: white;
+}
+
+.chat-top-bar {
+  width: 100%;
+  height: 50px;
+  background-color: #E5F3FF;
+  border-top: 2px solid #002887;
+  border-bottom: 2px solid #002887;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;  /* 좌우 여백 */
+}
+
+.bot-title {
+  color: #002887;
+  font-family: "PyeongChang Peace", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+}
+
+.title-char {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.title-char.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.chat-title {
+  color: #000;
+  text-align: center;
+  font-family: "PyeongChang Peace", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  will-change: opacity;
+}
+
+.chat-form {
+  position: fixed; /* viewport에 고정 */
+  bottom: 2rem; /* 하단에서의 간격 */
+  left: 50%; /* 가운데 정렬을 위해 */
+  transform: translateX(-50%); /* 가운데 정렬 완성 */
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem; /* 좌우 여백 */
+  z-index: 100; /* 다른 요소들 위에 표시 */
+}
+
+.chat-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 1rem;
+  margin: 0 3rem;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  font-size: 16px;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: #00509B;
+}
+
+/*타이핑 효과 쪽 css*/
+.welcome-message {
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.welcome-message.visible {
+  opacity: 1;
+}
+
+.welcome-line {
+  font-family: "PyeongChang Peace", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  margin: 0.5rem 0;
+  min-height: 36px;
+}
+
+/* 자취봇 강조 스타일 */
+.highlight {
+  color: #18D2D6;
+  transition: color 0.01s ease;
+}
+
+.scroll-button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-icon {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.scroll-button:hover .scroll-icon {
+  transform: scale(1.1);
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 1024px) {
+  .house-image {
+    width: 45vw;
+  }
+  
+  .side-button {
+    width: 20vw;
+  }
+  
+  .chat-container {
+    width: 90%;
+  }
+  
+  .chat-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .house-image {
+    width: 55vw;
+  }
+  
+  .side-button {
+    width: 25vw;
+  }
+  
+  .chat-title {
+    font-size: 24px;
+  }
+  
+  .chat-input {
+    height: 45px;
+    font-size: 14px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
