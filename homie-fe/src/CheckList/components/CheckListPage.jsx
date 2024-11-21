@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import TodoList from './TodoList';
-import NewCheckList from './NewCheckList';
 import '../css/checkListPage.css';
-
 
 const CheckListPage = () => {
   const initialTodos = {
@@ -50,7 +48,6 @@ const CheckListPage = () => {
   const [listTitle, setListTitle] = useState('');
   const [todos, setTodos] = useState([]);
   const [viewMode, setViewMode] = useState('all');
-  const [isCreating, setIsCreating] = useState(false);
 
   // 초기 로드 시 checkLists와 todos를 설정하는 useEffect
   useEffect(() => {
@@ -112,7 +109,6 @@ const CheckListPage = () => {
     setSelectedList(id);
     setListTitle(title);
     setViewMode('all');
-    setIsCreating(false);
   };
 
   const handleCreateList = (title) => {
@@ -120,7 +116,6 @@ const CheckListPage = () => {
     setCheckLists([newList, ...checkLists]);
     localStorage.setItem(`todos_${newList.id}`, JSON.stringify([]));
     handleSelectList(newList.id, title);
-    setIsCreating(false);
   };
 
   const handleDeleteList = (id) => {
@@ -149,17 +144,13 @@ const CheckListPage = () => {
           onCreateList={handleCreateList}
           onDeleteList={handleDeleteList}
         />
-        {isCreating ? (
-          <NewCheckList onSave={handleCreateList} />
-        ) : (
-          <TodoList 
-            listId={selectedList}
-            listTitle={listTitle}
-            todos={todos}
-            setTodos={setTodos}
-            viewMode={viewMode}
-          />
-        )}
+        <TodoList 
+          listId={selectedList}
+          listTitle={listTitle}
+          todos={todos}
+          setTodos={setTodos}
+          viewMode={viewMode}
+        />
       </div>
     </div>
   );
