@@ -1,10 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/introPage.css';
 
 const IntroPage = () => {
+  const chatWindowRef = useRef(null);
+  const sessionId = uuidv4(); // 고유 세션 ID 생성
   const [isAnimated, setIsAnimated] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState([]);
+  const [input, setInput] = useState(""); //메시지 입력
   const [opacity, setOpacity] = useState(1);
   const [slideX, setSlideX] = useState(0);
   const [visibleLetters, setVisibleLetters] = useState(0);
@@ -18,6 +23,95 @@ const IntroPage = () => {
   const welcomeText1 = "자취에 대한 모든 것을 물어보세요!";
   const welcomeText2 = "저희 자취봇이 모든 것을 알려드립니다!";
   const botTitle = "자취봇";
+
+  
+//메세지 추가하고 api호출
+  const sendMessage = async () => {
+    if (input.trim() === "") return;
+
+    const userMessage = { role: "user", content: input };
+    setMessage([...message, userMessage]); // 유저 메시지 추가
+
+    setInput(""); // 입력 초기화
+
+    // API 호출
+    const botMessage = await fetchBotResponse(input);
+    setMessage((prevMessages) => [...prevMessages, userMessage, botMessage]); // 챗봇 응답 추가
+
+    setTimeout(async () => {
+    const botMessage = await fetchBotResponse(input);
+    setMessage((prevMessages) => [...prevMessages, botMessage]);
+  }, 1000); // 1초 간격
+  
+  };
+
+    // API 호출 함수
+//     const fetchBotResponse = async (userMessage) => {
+//       try {
+//         const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+        
+//         const response = await fetch("https://api.openai.com/v1/chat/completions", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${apiKey}`,
+//           },
+//           body: JSON.stringify({
+//             model: "gpt-3.5-turboy", // 모델 이름
+//             messages: [...message, { role: "user", content: userMessage }],
+//           }),
+//         });
+    
+//         const data = await response.json();
+//         if (data.error) {
+//           console.error("API Error Response:", data.error);
+//           return { role: "bot", content: `오류 발생: ${data.error.message}` };
+//         }
+//         // 응답 검증
+//         if (!data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
+//           //console.error("Unexpected API response structure:", data);
+//           return { role: "bot", content: "API 응답이 올바르지 않습니다." };
+//         }
+
+//         // 정상적인 응답 처리
+//         return { role: "bot", content: data.choices[0].message.content };
+//       } catch (error) {
+//         console.error("Error fetching chatbot response:", error);
+//         return { role: "bot", content: "오류가 발생했습니다. 다시 시도해주세요." };
+//       }
+// };
+ const fetchBotResponse = async (userMessage) => {
+  try {
+    const response = await fetch(
+      `https://dialogflow.googleapis.com/v2/projects/homeprotector/agent/sessions/${sessionId}:detectIntent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_GOOGLE_API_KEY}`,
+        },
+        body: JSON.stringify({
+          queryInput: {
+            text: {
+              text: userMessage,
+              languageCode: "ko", // 또는 원하는 언어 코드
+            },
+          },
+        }),
+      }
+    );
+
+    const data = await response.json();
+    if (!data || !data.queryResult) {
+      return { role: "bot", content: "API 응답이 올바르지 않습니다." };
+    }
+
+    return { role: "bot", content: data.queryResult.fulfillmentText };
+  } catch (error) {
+    console.error("Error fetching chatbot response:", error);
+    return { role: "bot", content: "오류가 발생했습니다. 다시 시도해주세요." };
+  }
+ };
 
   const renderSecondLine = (text) => {
     const parts = text.split('자취봇');
@@ -36,6 +130,7 @@ const IntroPage = () => {
     return text;
   };
 
+  
   const startTypingAnimation = useCallback(() => {
     let text1Index = 0;
     let text2Index = 0;
@@ -65,11 +160,30 @@ const IntroPage = () => {
   }, []);
 
   useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [message]);
+
+  useEffect(() => {
+    if (isFullyScrolled) {
+      startTypingAnimation();
+    }
+  }, [isFullyScrolled, startTypingAnimation]);
+
+  //채팅 메세지 표시
+  //useEffect(() => {
+  //  const chatWindow = document.getElementById("chat-window");
+  //  chatWindow.scrollTop = chatWindow.scrollHeight;
+  //}, [message]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsAnimated(true);
     }, 2000);
 
     let lastScrollY = window.scrollY;
+
 
     // 스크롤 이벤트 핸들러
     const handleScroll = () => {
@@ -137,10 +251,9 @@ const IntroPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (message) {
-      console.log('Message submitted:', message);
-      setMessage('');
-    }
+    if (input.trim() === "") return;
+
+    sendMessage(); // 메시지 전송 함수 호출
   };
 
   return (
@@ -170,18 +283,9 @@ const IntroPage = () => {
       {/* 채팅 섹션 */}
       <div className="chat-section">
       <div className="chat-top-bar">
-        <span className="bot-title">
-          {[...botTitle].map((char, index) => (
-            <span 
-              key={index}
-              className={`title-char ${index < visibleLetters ? 'visible' : ''}`}
-            >
-              {char}
-            </span>
-          ))}
+        <span id="chat-window" className="bot-title">
         </span>
       </div>
-        <div className="chat-container">
           <h1 
             className="chat-title"
             style={{ 
@@ -192,6 +296,16 @@ const IntroPage = () => {
           >
             Do you want to start the chat?
           </h1>
+          <div ref={chatWindowRef} className="chat-container">
+          {message.map((msg, index) => (
+            <div 
+              key={index}
+              className={`message ${msg.role}`}
+            >
+              <b>{msg.role === "user" ? "User" : "Bot"}:</b> {msg.content}
+            </div>
+          ))}
+          
           <div
             className="welcome-message"
             style={{ opacity: messageVisible, transition: 'opacity 0.1s ease' }}
@@ -202,8 +316,8 @@ const IntroPage = () => {
           <form onSubmit={handleSubmit} className="chat-form">
             <input
               type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="얼마든지 물어보세요!"
               className="chat-input"
             />
