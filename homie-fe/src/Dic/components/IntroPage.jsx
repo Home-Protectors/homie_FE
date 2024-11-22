@@ -1,12 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/introPage.css';
 
 const IntroPage = () => {
   const chatWindowRef = useRef(null);
-  const sessionId = uuidv4(); // 고유 세션 ID 생성
   const [isAnimated, setIsAnimated] = useState(false);
   const [message, setMessage] = useState([]);
   const [input, setInput] = useState(""); //메시지 입력
@@ -33,19 +30,15 @@ const IntroPage = () => {
     setMessage([...message, userMessage]); // 유저 메시지 추가
 
     setInput(""); // 입력 초기화
-
     // API 호출
-    const botMessage = await fetchBotResponse(input);
-    setMessage((prevMessages) => [...prevMessages, userMessage, botMessage]); // 챗봇 응답 추가
-
     setTimeout(async () => {
     const botMessage = await fetchBotResponse(input);
-    setMessage((prevMessages) => [...prevMessages, botMessage]);
+    setMessage((prevMessages) => [...prevMessages, botMessage]); // 챗봇 응답 추가
   }, 1000); // 1초 간격
-  
+
   };
 
-    // API 호출 함수
+    // API 호출 함수 - gpt
 //     const fetchBotResponse = async (userMessage) => {
 //       try {
 //         const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
@@ -80,39 +73,27 @@ const IntroPage = () => {
 //         return { role: "bot", content: "오류가 발생했습니다. 다시 시도해주세요." };
 //       }
 // };
- const fetchBotResponse = async (userMessage) => {
+const fetchBotResponse = async (userMessage) => {
   try {
-    const response = await fetch(
-      `https://dialogflow.googleapis.com/v2/projects/homeprotector/agent/sessions/${sessionId}:detectIntent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_GOOGLE_API_KEY}`,
-        },
-        body: JSON.stringify({
-          queryInput: {
-            text: {
-              text: userMessage,
-              languageCode: "ko", // 또는 원하는 언어 코드
-            },
-          },
-        }),
-      }
-    );
+    const response = await fetch("http://localhost:5000/api/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: userMessage }),
+    });
 
     const data = await response.json();
-    if (!data || !data.queryResult) {
-      return { role: "bot", content: "API 응답이 올바르지 않습니다." };
+    if (data.error) {
+      return { role: "bot", content: "오류가 발생했습니다." };
     }
 
-    return { role: "bot", content: data.queryResult.fulfillmentText };
+    return { role: "bot", content: data.response };
   } catch (error) {
     console.error("Error fetching chatbot response:", error);
-    return { role: "bot", content: "오류가 발생했습니다. 다시 시도해주세요." };
+    return { role: "bot", content: "서버와의 통신에 실패했습니다." };
   }
- };
-
+};
   const renderSecondLine = (text) => {
     const parts = text.split('자취봇');
     if (parts.length === 1) return text;
@@ -305,7 +286,6 @@ const IntroPage = () => {
               <b>{msg.role === "user" ? "User" : "Bot"}:</b> {msg.content}
             </div>
           ))}
-          
           <div
             className="welcome-message"
             style={{ opacity: messageVisible, transition: 'opacity 0.1s ease' }}
