@@ -25,3 +25,5 @@ yarn-error.log*
 
 # Service account key (Google Cloud)
 ../backend/home-protector-442506-aea1a1161927.json
+
+../backend/node_modules/
