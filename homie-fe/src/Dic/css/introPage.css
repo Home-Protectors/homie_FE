@@ -108,6 +108,8 @@
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  transition-delay: calc(var(--char-index) * 50ms);
 }
 
 .title-char.visible {

@@ -23,7 +23,6 @@ const IntroPage = () => {
     const parts = text.split('자취봇');
     if (parts.length === 1) return text;
     
-    //타이핑 글자가 자취봇이면 색상효과
     if (text.includes('자취봇')) {
       return (
         <>
@@ -60,7 +59,6 @@ const IntroPage = () => {
       }
     };
 
-    // 타이핑 시작
     typeText();
   }, []);
 
@@ -71,67 +69,68 @@ const IntroPage = () => {
 
     let lastScrollY = window.scrollY;
 
-    // 스크롤 이벤트 핸들러
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
       const chatSection = document.querySelector('.chat-section');
       const chatSectionTop = chatSection?.offsetTop ?? 0;
 
-      //스크롤이 끝까지 내려갔는지
-      const isNowFullyScrolled = scrollPosition >= chatSectionTop;
+      // 스크롤이 정확히 바닥에 닿았는지 확인
+      const isAtBottom = Math.abs((currentScrollY + windowHeight) - documentHeight) < 1;
       
-      if (isNowFullyScrolled && !isFullyScrolled) {
+      // 스크롤이 정확히 바닥에 닿았을 때만 애니메이션 시작
+      if (isAtBottom && !isFullyScrolled) {
         setIsFullyScrolled(true);
         startTypingAnimation();
       }
 
-      if (currentScrollY >= chatSectionTop && lastScrollY < currentScrollY) {
+      // 채팅 섹션이 viewport에 있고 스크롤이 바닥에 닿았을 때만 메시지 표시
+      const slideEnd = chatSectionTop;
+      const slideProgress = Math.min(currentScrollY / slideEnd, 1);
+      const slideDistance = 100;
+      setSlideX(slideProgress * slideDistance);
+
+      if (isAtBottom) {
+        // 스크롤이 바닥에 닿으면 모든 글자 표시
+        setVisibleLetters(botTitle.length);
         setMessageVisible(1);
         if (typedText1 === '') {
           startTypingAnimation();
         }
-      }
-      // 스크롤을 조금이라도 올릴 때
-      else if (currentScrollY < lastScrollY) {
+      } else {
+        // 스크롤 진행도에 따른 글자 표시 계산
+        const progress = Math.min(Math.max(currentScrollY / chatSectionTop, 0), 1);
+        const lettersToShow = Math.floor(progress * (botTitle.length - 1)); // 마지막 글자는 바닥에서 표시
+        setVisibleLetters(lettersToShow);
         setMessageVisible(0);
       }
-      
-      lastScrollY = currentScrollY;
-      
-      // 메인 섹션 가로 슬라이드 계산
-      const slideEnd = chatSectionTop;
-      const slideProgress = Math.min(scrollPosition / slideEnd, 1);
-      const slideDistance = 100; // 슬라이드할 거리 (vw 단위)
-      setSlideX(slideProgress * slideDistance);
-
-      // 스크롤 진행도 계산 (0 ~ 1)
-      const progress = Math.min(Math.max(scrollPosition / chatSectionTop, 0), 1);
-      
-      // 보여줄 글자 수 계산 (0 ~ 3)
-      const lettersToShow = Math.floor(progress * botTitle.length);
-      setVisibleLetters(lettersToShow);
       
       // 타이틀 페이드아웃 계산
       const fadeStart = chatSectionTop * 0.5;
       const fadeEnd = chatSectionTop;
       
-      if (scrollPosition <= fadeStart) {
+      if (currentScrollY <= fadeStart) {
         setOpacity(1);
-      } else if (scrollPosition >= fadeEnd) {
+      } else if (currentScrollY >= fadeEnd) {
         setOpacity(0);
       } else {
         const fadeLength = fadeEnd - fadeStart;
-        const fadeProgress = (scrollPosition - fadeStart) / fadeLength;
+        const fadeProgress = (currentScrollY - fadeStart) / fadeLength;
         setOpacity(1 - fadeProgress);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll); // 창 크기 변경 시에도 체크
+    
+    // 초기 로드 시 스크롤 위치 체크
+    handleScroll();
     
     return () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, [isFullyScrolled, startTypingAnimation, typedText1]);
 
@@ -173,9 +172,12 @@ const IntroPage = () => {
         <span className="bot-title">
           {[...botTitle].map((char, index) => (
             <span 
-              key={index}
-              className={`title-char ${index < visibleLetters ? 'visible' : ''}`}
-            >
+            key={index}
+            className={`title-char ${index < visibleLetters ? 'visible' : ''}`}
+            style={{
+              '--char-index': index // CSS 변수로 인덱스 전달
+            }}
+          >
               {char}
             </span>
           ))}
