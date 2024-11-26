@@ -118,13 +118,14 @@
 }
 
 .chat-container {
+  flex: 1; /* 남은 공간 모두 차지 */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  position: relative;
+  overflow: hidden; /* 내부 스크롤만 허용 */
 }
 
 .chat-title {

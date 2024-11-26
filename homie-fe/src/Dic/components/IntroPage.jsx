@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ChatBot from './ChatBot'; 
 import '../css/introPage.css';
 
 const IntroPage = () => {
@@ -12,6 +13,10 @@ const IntroPage = () => {
   const [typedText1, setTypedText1] = useState('');
   const [typedText2, setTypedText2] = useState('');
   const [messageVisible, setMessageVisible] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [chatStarted, setChatStarted] = useState(false);
+  const [chatContentVisible, setChatContentVisible] = useState(false);
+  
 
   const navigate = useNavigate();
 
@@ -75,10 +80,19 @@ const IntroPage = () => {
       const documentHeight = document.documentElement.scrollHeight;
       const chatSection = document.querySelector('.chat-section');
       const chatSectionTop = chatSection?.offsetTop ?? 0;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       // 스크롤이 정확히 바닥에 닿았는지 확인
       const isAtBottom = Math.abs((currentScrollY + windowHeight) - documentHeight) < 1;
       
+      const mainSectionHeight = windowHeight * 0.8;
+
+      if (scrollTop >= mainSectionHeight * 0.5) {
+        setChatContentVisible(true);
+      } else {
+        setChatContentVisible(false);
+      }
+
       // 스크롤이 정확히 바닥에 닿았을 때만 애니메이션 시작
       if (isAtBottom && !isFullyScrolled) {
         setIsFullyScrolled(true);
@@ -137,7 +151,25 @@ const IntroPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (message) {
-      console.log('Message submitted:', message);
+      // 채팅이 시작되지 않았다면 시작으로 표시
+      if (!chatStarted) {
+        setChatStarted(true);
+        setMessageVisible(false); // 웰컴 메시지 숨기기
+      }
+
+      // 사용자 메시지 추가
+      const userMessage = {
+        text: message,
+        isUser: true
+      };
+      
+      // 봇 응답 추가
+      const botMessage = {
+        text: "네 알겠습니다.",
+        isUser: false
+      };
+
+      setMessages(prev => [...prev, userMessage, botMessage]);
       setMessage('');
     }
   };
@@ -184,23 +216,33 @@ const IntroPage = () => {
         </span>
       </div>
         <div className="chat-container">
-          <h1 
-            className="chat-title"
-            style={{ 
-              opacity: opacity,
-              visibility: opacity === 0 ? 'hidden' : 'visible',
-              transition: 'opacity 0.01s ease, visibility 0.01s ease'
-            }}
-          >
-            Do you want to start the chat?
-          </h1>
-          <div
-            className="welcome-message"
-            style={{ opacity: messageVisible, transition: 'opacity 0.1s ease' }}
-          >
-            <p className="welcome-line">{typedText1}</p>
-            <p className="welcome-line">{renderSecondLine(typedText2)}</p>
-         </div>
+        {!chatStarted && (
+            <>
+              <h1 
+                className="chat-title"
+                style={{ 
+                  opacity: opacity,
+                  visibility: opacity === 0 ? 'hidden' : 'visible',
+                  transition: 'opacity 0.01s ease, visibility 0.01s ease'
+                }}
+              >
+                Do you want to start the chat?
+              </h1>
+              <div
+                className="welcome-message"
+                style={{ opacity: messageVisible, transition: 'opacity 0.1s ease' }}
+              >
+                <p className="welcome-line">{typedText1}</p>
+                <p className="welcome-line">{renderSecondLine(typedText2)}</p>
+              </div>
+            </>
+          )}
+          <ChatBot 
+            messages={messages}
+            onSendMessage={handleSubmit}
+            isVisible={chatContentVisible}
+          />
+
           <form onSubmit={handleSubmit} className="chat-form">
             <input
               type="text"
