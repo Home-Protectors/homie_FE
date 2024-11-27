@@ -20,7 +20,7 @@ const ChatBot = ({ messages, onSendMessage, isVisible }) => {
       <div key={index} className={`message-wrapper ${message.isUser ? 'user-message' : 'bot-message'}`}>
         {!message.isUser && (
           <div className="bot-profile">
-            <img src="/bot-profile.png" alt="Bot" className="bot-avatar" />
+            <img src="/robot.png" alt="Bot" className="bot-avatar" />
           </div>
         )}
         <div className={`message ${message.isUser ? 'user' : 'bot'}`}>

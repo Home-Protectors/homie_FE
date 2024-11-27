@@ -117,17 +117,6 @@
   transform: translateY(0);
 }
 
-.chat-container {
-  flex: 1; /* 남은 공간 모두 차지 */
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden; /* 내부 스크롤만 허용 */
-}
-
 .chat-title {
   color: #000;
   text-align: center;
@@ -136,6 +125,17 @@
   font-weight: 700;
   will-change: opacity;
 }
+.chat-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  height: calc(100% - 80px);
+  overflow: hidden;
+}
+
+
+
 
 .chat-form {
   position: fixed; /* viewport에 고정 */
