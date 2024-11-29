@@ -20,6 +20,50 @@ const IntroPage = () => {
 
   const navigate = useNavigate();
 
+  const CLAUDE_API_KEY = process.env.REACT_APP_CLAUDE_API_KEY;
+  const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"; // CORS 프록시 서버
+
+  // sendToClaudeAPI 함수 수정
+  const sendToClaudeAPI = async (userMessage) => {
+    const url = `${CORS_PROXY}https://api.anthropic.com/v1/messages`;
+    
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'anthropic-version': '2023-06-01',
+          'x-api-key': CLAUDE_API_KEY
+        },
+        body: JSON.stringify({
+          model: "claude-3-opus-20240229",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: userMessage
+          }],
+          system: `
+            당신은 전세사기 위험을 전문적으로 분석하는 AI 전문가입니다. 
+            법률, 부동산, 금융 분야의 깊은 지식을 가진 전문가로서 답변해주세요.
+          `
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.content[0].text;
+    } catch (error) {
+      console.error('Error calling Claude API:', error);
+      return '죄송합니다. 일시적인 오류가 발생했습니다.';
+    }
+  };
+
+
+
   const welcomeText1 = "자취에 대한 모든 것을 물어보세요!";
   const welcomeText2 = "저희 자취봇이 모든 것을 알려드립니다!";
   const botTitle = "자취봇";
@@ -148,7 +192,7 @@ const IntroPage = () => {
     };
   }, [isFullyScrolled, startTypingAnimation, typedText1]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (message) {
       // 채팅이 시작되지 않았다면 시작으로 표시
@@ -162,14 +206,23 @@ const IntroPage = () => {
         text: message,
         isUser: true
       };
+      setMessages(prev => [...prev, userMessage]);
       
       // 봇 응답 추가
+      /*
       const botMessage = {
         text: "네 알겠습니다.",
         isUser: false
       };
+      */
+      const claudeResponse = await sendToClaudeAPI(message);
+      const botMessage = {
+        text: claudeResponse,
+        isUser: false
+      };
 
-      setMessages(prev => [...prev, userMessage, botMessage]);
+      setMessages(prev => [...prev, botMessage]);
+
       setMessage('');
     }
   };
