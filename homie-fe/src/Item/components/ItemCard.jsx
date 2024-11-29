@@ -1,14 +1,14 @@
 import React from 'react';
 
-const ItemCard = ({ brand, name, price, imageUrl }) => {
+const ItemCard = ({ brand, name, price, imageUrl, onClick }) => {
   return (
-    <div className="w-[235px] h-[231px] bg-[#f5dcd4] rounded-[30px] p-4">
-      <div className="flex justify-center items-center h-[100px] mb-4">
-        <img src={imageUrl} alt={name} className="max-h-full" />
+    <div className="item-card" onClick={onClick}>
+      <div className="item-image-container">
+        <img src={imageUrl} alt={name} className="item-image" />
       </div>
-      <span className="block text-[10px] text-[#595959] font-bold mb-1">{brand}</span>
-      <span className="block text-[15px] text-black font-bold mb-1">{name}</span>
-      <span className="block text-[15px] text-black font-bold">
+      <span className="item-brand">{brand}</span>
+      <span className="item-name">{name}</span>
+      <span className="item-price">
         {price.toLocaleString()}
       </span>
     </div>
@@ -16,3 +16,4 @@ const ItemCard = ({ brand, name, price, imageUrl }) => {
 };
 
 export default ItemCard;
+
