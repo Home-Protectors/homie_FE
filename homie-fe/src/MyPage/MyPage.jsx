@@ -22,8 +22,8 @@ const MyPage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result;
-        setProfilePic(base64Image); // Set Base64 image
-        localStorage.setItem("profilePic", base64Image); // Save to localStorage
+        setProfilePic(base64Image); 
+        localStorage.setItem("profilePic", base64Image); 
       };
       reader.readAsDataURL(file);
     }
@@ -42,8 +42,8 @@ const MyPage = () => {
   };
 
   const handleDelete = () => {
-    setProfilePic(initialProfilePic); // Reset only the profile picture
-    localStorage.removeItem("profilePic"); // Remove profile picture from localStorage
+    setProfilePic(initialProfilePic); 
+    localStorage.removeItem("profilePic"); 
     alert("프로필 사진이 초기화되었습니다.");
   };
 

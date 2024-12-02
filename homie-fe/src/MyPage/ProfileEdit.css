@@ -85,14 +85,14 @@ body {
   }
   
   .nickname-input {
-    max-width: 300px; /* 최대 너비를 설정 */
-    width: 80%; /* 부모 요소 대비 너비를 비율로 설정 */
-    min-width: 200px; /* 최소 너비를 설정 */
+    max-width: 300px; 
+    width: 80%; 
+    min-width: 200px; 
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin: 0 auto; /* 가운데 정렬 */
-    display: block; /* 중앙 정렬을 위해 블록 요소로 설정 */
+    margin: 0 auto; 
+    display: block; 
   }
   
   .nickname-input {
