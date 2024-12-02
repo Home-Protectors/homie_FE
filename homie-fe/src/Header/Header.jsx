@@ -59,8 +59,8 @@ const Header = () => {
           자취 Chatbot
         </button>
         <button 
-          className={`nav-button ${activeTab === '/checklist' ? 'active' : ''}`}
-          onClick={() => handleTabClick('/checklist')}
+          className={`nav-button ${activeTab === '/Dic' ? 'active' : ''}`}
+          onClick={() => handleTabClick('/Dic')}
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >
