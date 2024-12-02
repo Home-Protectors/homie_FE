@@ -1,165 +1,188 @@
 body {
-  font-family: "Arial", sans-serif;
-  background-color: #fef6e4; /* 부드러운 배경색 */
-  margin: 0;
-  padding: 0;
+      font-family: "PyeongChang Peace", sans-serif;
+      background-color: #FFF5F7;
+      margin: 0;
+      padding: 0;
 }
 
 .profile-container {
-  max-width: 700px;
-  margin: 30px auto;
-  background: #ffffff; /* 카드형 디자인 */
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */
+      max-width: 600px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(255, 119, 157, 0.15);
 }
 
 .profile-header {
-  text-align: center;
-  margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 25px;
 }
 
 .profile-header h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ff6f61;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #FF779D;
+      margin-bottom: 8px;
 }
 
 .profile-header p {
-  font-size: 0.9rem;
-  color: #ff9671;
+      font-family: "PyeongChang", sans-serif;
+      font-size: 0.95rem;
+      color: #FF99B9;
 }
 
 .profile-edit-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
 
-.profile-photo-section {
-  text-align: center;
-}
+    .profile-photo-section {
+      text-align: center;
+    }
 
 .profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%; /* 동그랗게 */
-  object-fit: cover;
-  border: 3px solid #ff9671;
-  transition: transform 0.3s ease-in-out;
-}
-
-.profile-photo:hover {
-  transform: scale(1.1); /* 마우스 오버 시 확대 */
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #FF779D;
+      box-shadow: 0 4px 12px rgba(255, 119, 157, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .photo-buttons {
-  margin-top: 10px;
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
 }
 
 .photo-upload-button,
 .photo-delete-button {
-  font-size: 0.9rem;
-  background-color: #ff9671;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
-  cursor: pointer;
-  margin: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.photo-upload-button:hover,
-.photo-delete-button:hover {
-  background-color: #e28462;
+      font-family: "PyeongChang", sans-serif;
+      font-size: 0.9rem;
+      background-color: #FF779D;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
 }
 
 .nickname-section {
-  flex: 1;
-  margin-left: 20px;
-  text-align: center;
-}
+      text-align: center;
+      width: auto;
+    }
 
-.nickname-input {
-  max-width: 300px;
-  width: 80%;
-  min-width: 200px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 0 auto;
-  display: block;
-  font-size: 1rem;
-}
+    .nickname-section label {
+      display: block;
+      color: #FF779D;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .nickname-input {
+      width: 200px;
+      padding: 10px 15px;
+      border: 2px solid #FFB8D0;
+      border-radius: 10px;
+      font-family: "PyeongChang", sans-serif;
+      font-size: 0.95rem;
+      text-align: center;
+    }
 
 .profile-buttons {
-  text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 25px;
 }
 
 .save-button,
 .cancel-button {
-  font-size: 1rem;
-  padding: 12px 25px;
-  margin: 10px 5px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+      font-family: "PyeongChang", sans-serif;
+      font-size: 1rem;
+      padding: 10px 25px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
 }
 
 .save-button {
-  background-color: #ff6f61;
-  color: white;
+      background-color: #FF779D;
+      color: white;
 }
 
 .cancel-button {
-  background-color: #ff9671;
-  color: white;
-}
-
-.save-button:hover {
-  background-color: #e5564e;
-}
-
-.cancel-button:hover {
-  background-color: #e28462;
+      background-color: #FFB8D0;
+      color: white;
 }
 
 .tips-section {
-  margin-top: 20px;
-  background: #fff6f0;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+      background: #FFF5F7;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #FFE4ED;
 }
 
 .tips-section h3 {
-  font-size: 1.2rem;
-  color: #ff6f61;
-  margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #FF779D;
+      margin-bottom: 12px;
 }
 
 .tips-section ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  color: #555;
+      list-style-type: none;
+      padding: 0;
+      color: #666;
+      font-family: "PyeongChang", sans-serif;
 }
 
 .tips-section li {
-  font-size: 0.95rem;
-  margin-bottom: 8px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
 }
 
-@media (max-width: 600px) {
-  .profile-edit-section {
-    flex-direction: column;
-  }
+.tips-section li::before {
+      content: "•";
+      color: #FF779D;
+      position: absolute;
+      left: 6px;
+}
 
-  .nickname-section {
-    margin-left: 0;
-    margin-top: 15px;
-  }
+.tips-section li strong {
+      color: #FF779D;
+}
+
+@media (max-width: 500px) {
+      .profile-container {
+            margin: 15px;
+            padding: 20px;
+      }
+
+      .profile-edit-section {
+            flex-direction: column;
+            align-items: center;
+      }
+
+      .nickname-section {
+            width: 100%;
+            text-align: center;
+      }
+
+      .nickname-input {
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+      }
 }
