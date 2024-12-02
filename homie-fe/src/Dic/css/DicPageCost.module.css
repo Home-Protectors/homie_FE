@@ -1,0 +1,300 @@
+.dictionaryContainer {
+  font-family: "PyeongChang Peace", sans-serif;
+}
+
+.modalContainer {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px); /* 전체 화면 높이 사용 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center;
+  overflow: hidden;
+  background-color: #CEF6F5;
+}
+
+.titleContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: -80px;
+}
+
+.mainTitle {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subTitle {
+  font-size: 20px;
+  color: #333;
+}
+
+.modalsWrapper {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* 화면 높이의 60% 사용 */
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;
+  overflow: hidden;
+}
+
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal[data-position="center"] {
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.modal[data-position="left"] {
+  transform: translateX(-100%);
+  z-index: 1;
+}
+
+.modal[data-position="right"] {
+  transform: translateX(100%);
+  z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .modalContent {
+    width: 85%;
+    min-height: 250px;
+    padding: 15px;
+  }
+
+  /* 작은 화면에서는 이전/다음 모달을 더 멀리 배치 */
+  .modal {
+    transform: translateX(calc(100% * (var(--index) - var(--current))));
+  }
+}
+
+.modalContent {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 800px;
+  height: 500px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigationButtons {
+  position: absolute;
+  bottom: 50px; /* 하단에서 50px 위에 위치 */
+  display: flex;
+  justify-content: center;
+  gap: 400px;
+  width: 100%;
+}
+
+.navButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover:not(.disabled) {
+  background-color: #d0d0d0;
+}
+
+.navButton.disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.active .modalContent {
+  transform: scale(1);
+}
+
+.nonActive {
+  opacity: 0.5;
+}
+
+.modalTitle {
+  width: 100%;
+  text-align: left;
+  margin-left: 60px;
+}
+
+.modalTitle h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contentBox p {
+  width: 100%;
+  line-height: 1.5;
+  color: #333;
+  text-align: left;
+}
+
+.contentBox h3 {
+  width: 100%;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 70px;
+}
+
+.contentBox {
+  background-color: rgba(135, 206, 235, 0.2); /* 하늘색 배경, 투명도 적용 */
+  border-radius: 40px;
+  padding: 20px;
+  flex: 1;
+  min-height: 150px; /* 최소 높이 설정 */
+  display: flex;
+
+}
+
+.imageSection {
+  flex: 1;
+  max-width: 45%;
+}
+
+.imageSection img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: -80px;
+  margin-left: -20px;
+}
+
+.textSection {
+  flex: 1;
+  text-align: left;
+}
+
+.textSection p {
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-line;  /* 줄바꿈 유지 */
+  margin-top: -120px;
+  margin-left: -20px;
+}
+
+.contentType2 {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.imageSection {
+  flex: 1;
+  max-width: 45%;
+}
+
+.imageSection img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: -80px;
+  margin-left: -20px;
+}
+
+.textSection2 {
+  flex: 1;
+  text-align: left;
+  font-family: "PyeongChang Peace", sans-serif;
+}
+
+.textSection2 p {
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: "PyeongChang Peace", sans-serif;
+  white-space: pre-line;  /* 줄바꿈 유지 */
+  margin-top: -70px;
+  margin-left: -20px;
+}
+
+
+.image12 {
+  width: 70%;
+  border-radius: 8px;
+  margin-top: -40px;
+  margin-left: 80px;
+}
+
+.image17 {
+  width: 60%;
+  border-radius: 8px;
+  margin-top: -70px;
+  margin-left:80px;
+}
+.image19 {
+  width: 70%;
+  border-radius: 8px;
+  margin-top: -70px;
+  margin-left: 80px;
+}
+
+/*카테고리 버튼 스타일*/
+.categoryNav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  background-color: #F6F6F6;
+  padding: 8px;
+  border-radius: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.categoryButton {
+  padding: 12px 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  color: #333;
+  font-weight: 500;
+
+}
+
+.categoryButton:hover {
+  background-color: rgba(255, 233, 0, 0.1);
+}
+
+.categoryButton.active {
+  background-color: #FFE900;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 1440px) {
+  .modalContent {
+    max-width: 800px;
+    height: auto;
+    min-height: 550px;
+  }
+  
+  .navigationButtons {
+    gap: 600px;
+  }
+}
+

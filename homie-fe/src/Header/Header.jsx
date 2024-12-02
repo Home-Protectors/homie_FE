@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // AuthContext 사용
+import { useAuth } from '../context/AuthContext';
 import './header.css';
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, logout } = useAuth(); // 인증 상태 및 로그아웃 함수 가져오기
+  const { isAuthenticated, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState(getActiveTab(location.pathname));
 
-  // Set activeTab based on the current path
-  const [activeTab, setActiveTab] = useState(location.pathname);
-
-  // Update activeTab whenever the location changes
   useEffect(() => {
-    setActiveTab(location.pathname);
+    setActiveTab(getActiveTab(location.pathname));
   }, [location.pathname]);
+
+  function getActiveTab(path) {
+    if (path.startsWith('/tips')) {
+      return '/tips';
+    }
+    return path;
+  }
 
   const handleTabClick = (path) => {
     setActiveTab(path);
@@ -24,18 +28,16 @@ const Header = () => {
   const handleLogout = () => {
     const confirmed = window.confirm('로그아웃 하시겠습니까?');
     if (confirmed) {
-      logout(); // 로그아웃 함수 호출
-      navigate('/login'); // 로그인 페이지로 이동
+      logout();
+      navigate('/login');
     }
   };
 
-  // 인증 상태에 따라 헤더를 조건부 렌더링
   if (!isAuthenticated) return null;
 
   return (
     <div className="header-container">
       <header className="header">
-        {/* Home Button */}
         <button
           className="icon-button header-left"
           onClick={() => navigate('/')}
@@ -45,11 +47,18 @@ const Header = () => {
           <img src="/icons/home.png" alt="홈" className="icon" />
         </button>
 
-        {/* Navigation Buttons */}
         <div className="header-center">
           <button
             className={`nav-button ${activeTab === '/' ? 'active' : ''}`}
             onClick={() => handleTabClick('/')}
+            onMouseOver={(e) => e.currentTarget.classList.add('hover')}
+            onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
+          >
+            자취 Chatbot
+          </button>
+          <button
+            className={`nav-button ${activeTab === '/Dic' ? 'active' : ''}`}
+            onClick={() => handleTabClick('/Dic')}
             onMouseOver={(e) => e.currentTarget.classList.add('hover')}
             onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
           >
@@ -81,7 +90,6 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Logout Button */}
         <button
           onClick={handleLogout}
           className="icon-button header-right"
