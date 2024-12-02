@@ -6,6 +6,7 @@ import '../css/introPage.css';
 const IntroPage = () => {
   const [isAnimated, setIsAnimated] = useState(false);
   const [message, setMessage] = useState('');
+  const [input, setInput] = useState('');
   const [opacity, setOpacity] = useState(1);
   const [slideX, setSlideX] = useState(0);
   const [visibleLetters, setVisibleLetters] = useState(0);
@@ -20,48 +21,33 @@ const IntroPage = () => {
 
   const navigate = useNavigate();
 
-  const CLAUDE_API_KEY = process.env.REACT_APP_CLAUDE_API_KEY;
-  const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"; // CORS 프록시 서버
+    // GPT API 호출 함수
+    const fetchBotResponse = async (userMessage) => {
+      try {
+        const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+  
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: userMessage }],
+          }),
+        });
 
-  // sendToClaudeAPI 함수 수정
-  const sendToClaudeAPI = async (userMessage) => {
-    const url = `${CORS_PROXY}https://api.anthropic.com/v1/messages`;
-    
-    
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'anthropic-version': '2023-06-01',
-          'x-api-key': CLAUDE_API_KEY
-        },
-        body: JSON.stringify({
-          model: "claude-3-opus-20240229",
-          max_tokens: 1000,
-          messages: [{
-            role: "user",
-            content: userMessage
-          }],
-          system: `
-            당신은 전세사기 위험을 전문적으로 분석하는 AI 전문가입니다. 
-            법률, 부동산, 금융 분야의 깊은 지식을 가진 전문가로서 답변해주세요.
-          `
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        const data = await response.json();
+      if (!data.choices || data.choices.length === 0) {
+        return { text: 'GPT 응답을 받을 수 없습니다.', isUser: false };
       }
-
-      const result = await response.json();
-      return result.content[0].text;
+      return { text: data.choices[0].message.content, isUser: false };
     } catch (error) {
-      console.error('Error calling Claude API:', error);
-      return '죄송합니다. 일시적인 오류가 발생했습니다.';
+      console.error('Error fetching GPT response:', error);
+      return { text: '오류가 발생했습니다. 다시 시도해주세요.', isUser: false };
     }
   };
-
 
 
   const welcomeText1 = "자취에 대한 모든 것을 물어보세요!";
@@ -194,37 +180,23 @@ const IntroPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (message) {
-      // 채팅이 시작되지 않았다면 시작으로 표시
-      if (!chatStarted) {
-        setChatStarted(true);
-        setMessageVisible(false); // 웰컴 메시지 숨기기
-      }
+    if (!input.trim()) return;
 
-      // 사용자 메시지 추가
-      const userMessage = {
-        text: message,
-        isUser: true
-      };
-      setMessages(prev => [...prev, userMessage]);
-      
-      // 봇 응답 추가
-      /*
-      const botMessage = {
-        text: "네 알겠습니다.",
-        isUser: false
-      };
-      */
-      const claudeResponse = await sendToClaudeAPI(message);
-      const botMessage = {
-        text: claudeResponse,
-        isUser: false
-      };
-
-      setMessages(prev => [...prev, botMessage]);
-
-      setMessage('');
+    // 채팅 시작 처리
+    if (!chatStarted) {
+      setChatStarted(true);
+      setMessageVisible(false); // 웰컴 메시지 숨김
     }
+
+    // 사용자 메시지 추가
+    const userMessage = { text: input, isUser: true };
+    setMessages(prev => [...prev, userMessage]);
+    
+    //봇 응답 메시지 추가
+    const botResponse = await fetchBotResponse(input);
+    setMessages(prev => [...prev, botResponse]);
+
+    setInput('');
   };
 
   return (
@@ -299,8 +271,8 @@ const IntroPage = () => {
           <form onSubmit={handleSubmit} className="chat-form">
             <input
               type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
               placeholder="얼마든지 물어보세요!"
               className="chat-input"
             />
