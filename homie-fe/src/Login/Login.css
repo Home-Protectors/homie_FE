@@ -1,123 +1,137 @@
-/* Container for Login */
+/* Login.css */
+
+/* 기본 컨테이너 스타일 */
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #fef6e4;
-    padding: 20px;
-  }
-  
-  /* Header section for title and logo */
-  .login-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .login-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .login-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ff6f61;
-    margin: 0;
-  }
-  
-  .login-subtitle {
-    font-size: 1rem;
-    color: #ff9671;
-    margin: 5px 0 20px 0;
-  }
-  
-  /* Form styling */
-  .login-form {
-    background: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .login-form h2 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .form-group label {
-    display: block;
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    outline: none;
-  }
-  
-  .form-group input:focus {
-    border-color: #ff6f61;
-  }
-  
-  /* Buttons */
-  .login-button {
-    width: 100%;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #ff6f61;
-    color: #ffffff;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .login-button:hover {
-    background-color: #e5564e;
-  }
-  
-  .signup-button {
-    width: 100%;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #ff9671;
-    color: #ffffff;
-    cursor: pointer;
-  }
-  
-  .signup-button:hover {
-    background-color: #e28462;
-  }
-  
-  /* Error message */
-  .error-message {
-    color: #ff4d4d;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
-  /* 로고 이미지 스타일 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFF5F7;
+      font-family: "PyeongChang", "PyeongChang Peace", sans-serif;
+}
+
+/* 헤더 섹션 스타일링 */
+.login-header {
+      text-align: center;
+      margin-bottom: 20px;
+}
+
 .login-logo {
-  width: 250px; /* 원하는 크기로 조정 */
-  height: auto;
-  border-radius: 50%; /* 동그랗게 만들기 (필요 시) */
-  margin-bottom: 10px;
+      width: 150px;
+      height: 150px;
+      border-radius: 30%;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00509B;
+      margin: 0;
+      letter-spacing: -0.5px;
+      font-family: "PyeongChang Peace", sans-serif;
+}
+
+.login-subtitle {
+      font-size: 1.2rem;
+      color: #00509B;
+      margin: 10px 0 25px 0;
+      opacity: 0.8;
+}
+
+/* 폼 스타일링 */
+.login-form {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 80, 155, 0.15);
+      width: 100%;
+      max-width: 460px;
+}
+
+.form-group {
+      margin-bottom: 25px;
+      text-align: left;
+}
+
+.form-group label {
+      display: block;
+      font-family: "PyeongChang Peace", sans-serif;
+      font-size: 1.1rem;
+      color: #00509B;
+      margin-bottom: 8px;
+      font-weight: 800;
+}
+
+.form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #BFEFF5;
+      border-radius: 50px;
+      font-family: "PyeongChang", sans-serif;
+      font-size: 8px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      height: 25px;
+      margin-bottom: 16px;
+}
+
+.form-group input:focus {
+      border-color: #00509B;
+      box-shadow: 0 0 0 3px rgba(0, 80, 155, 0.1);
+      outline: none;
+}
+
+.button-container {
+      display: flex;
+      gap: 15px;
+      width: 100%;
+      margin-top: 10px;
+      height: 45px
+}
+
+/* 버튼 공통 스타일링 */
+.login-button,
+.signup-button {
+      flex: 1;
+      height: 45px;
+
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 12px;
+      font-family: "PyeongChang", sans-serif;
+      font-weight: 800;
+}
+
+/* 로그인 버튼 스타일 */
+.login-button {
+      background-color: #00509B;
+      color: #FFFA01;
+      font-weight: 700;
+}
+
+/* 회원가입 버튼 스타일 */
+.signup-button {
+      background-color: #F8AFA6;
+      color: #ffffff;
+      font-weight: 700;
+}
+
+/* 버튼 호버 효과 */
+.login-button:hover,
+.signup-button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+}
+
+/* 에러 메시지 스타일링 */
+.error-message {
+      color: #e74c3c;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 500;
 }
