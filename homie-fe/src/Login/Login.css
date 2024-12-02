@@ -92,18 +92,21 @@
 }
 
 /* 버튼 공통 스타일링 */
+
 .login-button,
 .signup-button {
       flex: 1;
       height: 45px;
-
+      font-weight: bold;
+      padding: 12px 20px;
+      width: 100%;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 12px;
+      font-size: 1rem;
+      margin-top: 15px;
       font-family: "PyeongChang", sans-serif;
-      font-weight: 800;
 }
 
 /* 로그인 버튼 스타일 */
