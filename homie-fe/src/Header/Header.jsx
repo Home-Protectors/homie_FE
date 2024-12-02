@@ -8,12 +8,19 @@ const Header = () => {
   const location = useLocation();
   
   // 현재 경로에 따라 activeTab 설정
-  const [activeTab, setActiveTab] = useState(location.pathname);
+  const [activeTab, setActiveTab] = useState(getActiveTab(location.pathname));
 
   // location이 변경될 때마다 activeTab 업데이트
   useEffect(() => {
-    setActiveTab(location.pathname);
+    setActiveTab(getActiveTab(location.pathname));
   }, [location.pathname]);
+
+  function getActiveTab(path) {
+    if (path.startsWith('/tips')) {
+      return '/tips';
+    }
+    return path;
+  }
 
   const handleTabClick = (path) => {
     setActiveTab(path);
@@ -46,6 +53,14 @@ const Header = () => {
         <button 
           className={`nav-button ${activeTab === '/' ? 'active' : ''}`}
           onClick={() => handleTabClick('/')}
+          onMouseOver={(e) => e.currentTarget.classList.add('hover')}
+          onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
+        >
+          자취 Chatbot
+        </button>
+        <button 
+          className={`nav-button ${activeTab === '/Dic' ? 'active' : ''}`}
+          onClick={() => handleTabClick('/Dic')}
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >

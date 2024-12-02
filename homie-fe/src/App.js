@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -5,6 +6,7 @@ import Header from './Header/Header';
 import IntroPage from './Dic/components/IntroPage';
 import CheckListPage from './CheckList/components/CheckListPage';
 import Item from './Item/components/Item';
+import DicPageCost from './Dic/components/DicPageCost';
 import './App.css';
 
 // ItemWrapper 컴포넌트 추가
@@ -36,6 +38,9 @@ function AppContent() {
               <Route path="/tips/kitchen" element={<ItemWrapper category="주방용품" />} />
               <Route path="/tips/cleaning" element={<ItemWrapper category="청소용품" />} />
               <Route path="/tips/necessities" element={<ItemWrapper category="생필품" />} />
+
+              {/* Dic 페이지 연결*/}
+              <Route path="/Dic" element={<DicPageCost />} />
             </Routes>
           </div>
         </CSSTransition>
@@ -54,3 +59,4 @@ function App() {
 }
 
 export default App;
+

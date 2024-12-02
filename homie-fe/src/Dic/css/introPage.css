@@ -108,21 +108,13 @@
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  transition-delay: calc(var(--char-index) * 50ms);
 }
 
 .title-char.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.chat-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
 }
 
 .chat-title {
@@ -133,6 +125,17 @@
   font-weight: 700;
   will-change: opacity;
 }
+.chat-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  height: calc(100% - 80px);
+  overflow: hidden;
+}
+
+
+
 
 .chat-form {
   position: fixed; /* viewport에 고정 */
