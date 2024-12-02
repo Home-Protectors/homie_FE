@@ -19,7 +19,7 @@ const SignUp = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result);
+        setProfilePic(reader.result); // Store the Base64 encoded image string
       };
       reader.readAsDataURL(file);
     }
@@ -28,24 +28,35 @@ const SignUp = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
-      setError("모든 정보를 입력해주세요.");
+    // Validation to ensure required fields are filled
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("이름, 아이디, 비밀번호는 필수 입력 사항입니다.");
       return;
     }
 
+    // Retrieve existing users from localStorage
     const existingUsers = JSON.parse(localStorage.getItem("users")) || {};
 
+    // Check for duplicate email
     if (existingUsers[email]) {
       setError("이미 사용 중인 이메일입니다.");
       return;
     }
 
-    const newUser = { name, email, password, profilePic };
+    // Create a new user object
+    const newUser = {
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      profilePic: profilePic || "", // Profile picture is optional
+    };
+
+    // Save the new user to localStorage
     existingUsers[email] = newUser;
     localStorage.setItem("users", JSON.stringify(existingUsers));
 
     alert(`${name}님, 회원가입이 완료되었습니다!`);
-    navigate("/login");
+    navigate("/login"); // Redirect to login page
   };
 
   return (
@@ -97,7 +108,7 @@ const SignUp = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="photo-upload">프로필 사진</label>
+          <label htmlFor="photo-upload">프로필 사진 (선택)</label>
           <input type="file" id="photo-upload" onChange={handlePhotoUpload} />
         </div>
 
