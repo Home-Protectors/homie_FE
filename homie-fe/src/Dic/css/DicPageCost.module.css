@@ -82,8 +82,8 @@
 .modalContent {
   background-color: #ffffff;
   width: 90%;
-  max-width: 700px;
-  height: 550px;
+  max-width: 800px;
+  height: 500px;
   border-radius: 40px;
   display: flex;
   flex-direction: column;
@@ -298,104 +298,3 @@
   }
 }
 
-/* 중간 화면 (768px ~ 1439px) */
-@media screen and (max-width: 1439px) {
-  .modalContent {
-    width: 85%;
-    max-width: 700px;
-    height: auto;
-    min-height: 500px;
-  }
-  
-  .navigationButtons {
-    gap: 400px;
-  }
-  
-  .mainTitle {
-    font-size: 50px;
-  }
-}
-
-/* 작은 화면 (768px 이하) */
-@media screen and (max-width: 768px) {
-  .modalContent {
-    width: 90%;
-    height: auto;
-    min-height: 450px;
-    padding: 15px;
-  }
-  
-  .navigationButtons {
-    gap: 200px;
-    bottom: 30px;
-  }
-  
-  .mainTitle {
-    font-size: 40px;
-  }
-  
-  .modalTitle {
-    margin-left: 30px;
-  }
-  
-  .contentBox {
-    padding: 15px;
-  }
-  
-  .imageSection img {
-    margin-top: -40px;
-    margin-left: -10px;
-  }
-  
-  .textSection p, .textSection2 p {
-    margin-top: -60px;
-    margin-left: -10px;
-  }
-}
-
-/* 매우 작은 화면 (480px 이하) */
-@media screen and (max-width: 480px) {
-  .modalContent {
-    width: 95%;
-    min-height: 400px;
-    padding: 10px;
-  }
-  
-  .navigationButtons {
-    gap: 150px;
-    bottom: 20px;
-  }
-  
-  .mainTitle {
-    font-size: 32px;
-  }
-  
-  .categoryNav {
-    max-width: 90%;
-    padding: 5px;
-  }
-  
-  .categoryButton {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-}
-
-/* 높이에 따른 조정 */
-@media screen and (max-height: 800px) {
-  .modalContainer {
-    height: calc(100vh - 40px);
-  }
-  
-  .titleContainer {
-    margin-top: -40px;
-  }
-  
-  .modalContent {
-    min-height: auto;
-  }
-  
-  .modalsWrapper {
-    height: 70vh;
-  }
-}
