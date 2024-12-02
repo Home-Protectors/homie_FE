@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./ProfileEdit.css";
 
 const MyPage = () => {
-  const initialNickname = "원준영"; // Default name if no user is found
+  const initialNickname = "원준영"; 
   const initialProfilePic = "https://via.placeholder.com/150";
 
   const [nickname, setNickname] = useState(initialNickname);
   const [profilePic, setProfilePic] = useState(initialProfilePic);
 
-  // Fetch logged-in user's data from localStorage on mount
+  
   useEffect(() => {
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
@@ -33,7 +33,7 @@ const MyPage = () => {
         const base64Image = reader.result;
         setProfilePic(base64Image);
 
-        // Update the user's profile picture in localStorage
+       
         const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
         if (loggedInUserEmail) {
           const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -48,7 +48,7 @@ const MyPage = () => {
   };
 
   const handleSave = () => {
-    // Save nickname and profile picture to localStorage for the logged-in user
+    
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
       const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -63,7 +63,7 @@ const MyPage = () => {
 
   const handleCancel = () => {
     alert("변경이 취소되었습니다.");
-    // Revert to saved nickname and profile picture
+    
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
       const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -78,7 +78,7 @@ const MyPage = () => {
   const handleDelete = () => {
     setProfilePic(initialProfilePic);
 
-    // Remove profile picture from localStorage for the logged-in user
+    
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
       const users = JSON.parse(localStorage.getItem("users")) || {};

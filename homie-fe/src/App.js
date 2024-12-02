@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { AuthProvider, useAuth } from './context/AuthContext'; // Import AuthContext
+import { AuthProvider, useAuth } from './context/AuthContext'; 
 import Header from './Header/Header';
 import IntroPage from './Dic/components/IntroPage';
 import CheckListPage from './CheckList/components/CheckListPage';
 import Item from './Item/components/Item';
 import MyPage from './MyPage/MyPage';
 import Login from './Login/Login';
-import SignUp from './Login/SignUp'; // Import the SignUp component
+import SignUp from './Login/SignUp'; 
 import './App.css';
 
 // ItemWrapper 컴포넌트 추가
@@ -16,16 +16,16 @@ const ItemWrapper = ({ category }) => {
   return <Item initialCategory={category} />;
 };
 
-// Protected Route Component
+
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth(); // Check authentication status
+  const { isAuthenticated } = useAuth(); 
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
-// AppContent Component
+
 function AppContent() {
   const location = useLocation();
-  const { isAuthenticated } = useAuth(); // Access authentication state
+  const { isAuthenticated } = useAuth(); 
 
   return (
     <div className="App">

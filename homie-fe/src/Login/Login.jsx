@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Import AuthContext
+import { useAuth } from "../context/AuthContext"; 
 import "./Login.css";
 
 const Login = () => {
@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth(); // Access login function from AuthContext
+  const { login } = useAuth(); 
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -29,10 +29,10 @@ const Login = () => {
       return;
     }
 
-    localStorage.setItem("loggedInUserEmail", email); // Save logged-in user's email
-    login(); // Set authentication state to true
+    localStorage.setItem("loggedInUserEmail", email); 
+    login(); 
     alert(`${user.name}님, 환영합니다!`);
-    navigate("/"); // Redirect to home
+    navigate("/"); 
   };
 
   return (
@@ -40,7 +40,7 @@ const Login = () => {
       <div className="login-header">
         {/* 로고 이미지 */}
         <img
-          src={require("../assets/logo.png")} // 로고 이미지 경로 (프로젝트 내)
+          src={require("../assets/logo.png")} 
           alt="자취생 로고"
           className="login-logo"
         />
