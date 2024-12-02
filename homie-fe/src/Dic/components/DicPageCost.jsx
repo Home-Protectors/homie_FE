@@ -759,7 +759,7 @@ const DicPageCost = () => {
   };
 
   return (
-    <>
+    <div className = {styles.dictionaryContainer}>
     <div className={styles.modalContainer}>
     <div className={styles.titleContainer}>
         <h1 className={styles.mainTitle}>Dictionary</h1>
@@ -815,7 +815,7 @@ const DicPageCost = () => {
         </button>
       </div>
     </div>
-    </>
+    </div>
   );
 };
 
