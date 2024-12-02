@@ -5,6 +5,7 @@ import Header from './Header/Header';
 import IntroPage from './Dic/components/IntroPage';
 import CheckListPage from './CheckList/components/CheckListPage';
 import Item from './Item/components/Item';
+import MyPage from './MyPage/MyPage';
 import './App.css';
 
 // ItemWrapper 컴포넌트 추가
@@ -29,6 +30,7 @@ function AppContent() {
             <Routes location={location}>
               <Route path="/" element={<IntroPage />} />
               <Route path="/checklist" element={<CheckListPage />} />
+              <Route path="/mypage" element={<MyPage />} />
               
               {/* /tips 경로에 Item 컴포넌트 연결 */}
               <Route path="/tips" element={<ItemWrapper category="전체" />} />
