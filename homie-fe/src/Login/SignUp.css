@@ -1,0 +1,105 @@
+/* 공통 배경 스타일 */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff7e6; /* 로그인 페이지와 동일한 배경색 */
+}
+
+/* 회원가입 카드 스타일 */
+.signup-form {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* 제목 스타일 */
+.signup-form h2 {
+  margin-bottom: 15px;
+  color: #e35d5b;
+  font-family: "Arial", sans-serif;
+  font-size: 1.8rem;
+}
+
+/* 입력 필드 그룹 */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #f67a7a;
+  box-shadow: 0 0 5px rgba(255, 104, 104, 0.5);
+}
+
+/* 회원가입 버튼 */
+.signup-button {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #f67a7a;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.signup-button:hover {
+  background-color: #e35d5b;
+}
+
+/* 에러 메시지 */
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* 회원가입 페이지 상단 헤더 */
+.signup-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.signup-header h1 {
+  font-size: 2rem;
+  color: #e35d5b;
+  margin: 0;
+}
+
+.signup-header p {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 5px;
+}

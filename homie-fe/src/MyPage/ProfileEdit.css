@@ -1,0 +1,165 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #fef6e4; /* 부드러운 배경색 */
+  margin: 0;
+  padding: 0;
+}
+
+.profile-container {
+  max-width: 700px;
+  margin: 30px auto;
+  background: #ffffff; /* 카드형 디자인 */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6f61;
+}
+
+.profile-header p {
+  font-size: 0.9rem;
+  color: #ff9671;
+}
+
+.profile-edit-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-photo-section {
+  text-align: center;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* 동그랗게 */
+  object-fit: cover;
+  border: 3px solid #ff9671;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-photo:hover {
+  transform: scale(1.1); /* 마우스 오버 시 확대 */
+}
+
+.photo-buttons {
+  margin-top: 10px;
+}
+
+.photo-upload-button,
+.photo-delete-button {
+  font-size: 0.9rem;
+  background-color: #ff9671;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.photo-upload-button:hover,
+.photo-delete-button:hover {
+  background-color: #e28462;
+}
+
+.nickname-section {
+  flex: 1;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.nickname-input {
+  max-width: 300px;
+  width: 80%;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: block;
+  font-size: 1rem;
+}
+
+.profile-buttons {
+  text-align: center;
+}
+
+.save-button,
+.cancel-button {
+  font-size: 1rem;
+  padding: 12px 25px;
+  margin: 10px 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button {
+  background-color: #ff6f61;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #ff9671;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #e5564e;
+}
+
+.cancel-button:hover {
+  background-color: #e28462;
+}
+
+.tips-section {
+  margin-top: 20px;
+  background: #fff6f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tips-section h3 {
+  font-size: 1.2rem;
+  color: #ff6f61;
+  margin-bottom: 10px;
+}
+
+.tips-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #555;
+}
+
+.tips-section li {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .profile-edit-section {
+    flex-direction: column;
+  }
+
+  .nickname-section {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+}

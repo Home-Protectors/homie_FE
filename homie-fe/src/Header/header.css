@@ -1,28 +1,29 @@
 /* src/Header/header.css */
-.header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 16px;
-      background-color: #fff;
-      border: 3px solid #002887;
-      border-radius: 4px;
-      width: calc(100% - 16px); /* 좌우 여백 고려 */
-      margin: 0 8px;
-      box-sizing: border-box;
-    }
-
 .header-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
-      background-color: white;
-      height: 80px; /* 헤더 컨테이너 높이 설정 */
+      background-color: #fff; /* 배경색을 명시적으로 설정하여 상위 요소로부터 영향을 받지 않음 */
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 시각적으로 돋보이게 */
+}
+
+.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: #fff; /* 헤더 자체의 배경색 명시적 설정 */
+      border: 3px solid #002887;
+      border-radius: 4px;
+      width: calc(100% - 16px);
+      margin: 0 8px;
+      box-sizing: border-box;
 }
 
 /* 아이콘 버튼 스타일 */
@@ -125,7 +126,7 @@
       }
 }
 
-.nav-button:hover,
+.nav-button:hover,ㅗㅎ
 .nav-button.hover {
       animation: buttonPulse 1s infinite;
 }
