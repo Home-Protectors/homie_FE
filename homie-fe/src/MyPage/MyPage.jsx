@@ -2,15 +2,24 @@ import React, { useState, useEffect } from "react";
 import "./ProfileEdit.css";
 
 const MyPage = () => {
-  const initialNickname = "원준영";
+  const initialNickname = "원준영"; // Default name if no user is found
   const initialProfilePic = "https://via.placeholder.com/150";
 
-  const [nickname, setNickname] = useState(() => {
-    return localStorage.getItem("nickname") || initialNickname;
-  });
-  const [profilePic, setProfilePic] = useState(() => {
-    return localStorage.getItem("profilePic") || initialProfilePic;
-  });
+  const [nickname, setNickname] = useState(initialNickname);
+  const [profilePic, setProfilePic] = useState(initialProfilePic);
+
+  // Fetch logged-in user's data from localStorage on mount
+  useEffect(() => {
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      const user = users[loggedInUserEmail];
+      if (user) {
+        setNickname(user.name || initialNickname);
+        setProfilePic(user.profilePic || initialProfilePic);
+      }
+    }
+  }, []);
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
@@ -22,37 +31,65 @@ const MyPage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result;
-        setProfilePic(base64Image); 
-        localStorage.setItem("profilePic", base64Image); 
+        setProfilePic(base64Image);
+
+        // Update the user's profile picture in localStorage
+        const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+        if (loggedInUserEmail) {
+          const users = JSON.parse(localStorage.getItem("users")) || {};
+          if (users[loggedInUserEmail]) {
+            users[loggedInUserEmail].profilePic = base64Image;
+            localStorage.setItem("users", JSON.stringify(users));
+          }
+        }
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleSave = () => {
-    localStorage.setItem("nickname", nickname);
-    localStorage.setItem("profilePic", profilePic);
+    // Save nickname and profile picture to localStorage for the logged-in user
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (users[loggedInUserEmail]) {
+        users[loggedInUserEmail].name = nickname;
+        users[loggedInUserEmail].profilePic = profilePic;
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    }
     alert("변경사항이 저장되었습니다.");
   };
 
   const handleCancel = () => {
     alert("변경이 취소되었습니다.");
-    setNickname(localStorage.getItem("nickname") || initialNickname);
-    setProfilePic(localStorage.getItem("profilePic") || initialProfilePic);
+    // Revert to saved nickname and profile picture
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      const user = users[loggedInUserEmail];
+      if (user) {
+        setNickname(user.name || initialNickname);
+        setProfilePic(user.profilePic || initialProfilePic);
+      }
+    }
   };
 
   const handleDelete = () => {
-    setProfilePic(initialProfilePic); 
-    localStorage.removeItem("profilePic"); 
+    setProfilePic(initialProfilePic);
+
+    // Remove profile picture from localStorage for the logged-in user
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (users[loggedInUserEmail]) {
+        users[loggedInUserEmail].profilePic = initialProfilePic;
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    }
+
     alert("프로필 사진이 초기화되었습니다.");
   };
-
-  useEffect(() => {
-    const savedNickname = localStorage.getItem("nickname");
-    const savedProfilePic = localStorage.getItem("profilePic");
-    if (savedNickname) setNickname(savedNickname);
-    if (savedProfilePic) setProfilePic(savedProfilePic);
-  }, []);
 
   return (
     <div className="profile-container">
