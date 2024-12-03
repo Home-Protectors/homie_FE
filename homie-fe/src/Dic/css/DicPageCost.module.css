@@ -251,7 +251,7 @@
 .contentBox::-webkit-scrollbar-thumb,
 .textSection::-webkit-scrollbar-thumb,
 .textSection2::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.2);
+      background: #18D2D6;
       border-radius: 3px;
 }
 
