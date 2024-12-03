@@ -57,6 +57,19 @@ const Sidebar = ({
     }
   };
 
+  // Calculate indicator position
+  const indicatorStyle = {
+    transform: `translateY(${
+      checkLists.findIndex((list) => list.id === selectedList) * 45
+    }px)`, // Assuming 45px height per item
+    transition: 'transform 0.3s ease',
+    position: 'absolute',
+    width: '100%',
+    height: '45px',
+    backgroundColor: 'white', // Default indicator color
+    zIndex: 0,
+  };
+
   return (
     <div className="sidebar">
       <h1 className="sidebar-title">자취 CheckList</h1>
@@ -94,8 +107,9 @@ const Sidebar = ({
 
       <h2 className="section-title">나의 목록</h2>
 
-      {/* 나의 목록 - 검색에서 제외 */}
-      <div className="checklist-nav">
+      <div className="checklist-nav" style={{ position: 'relative' }}>
+        {/* Selection Indicator */}
+        <div style={indicatorStyle}></div>
         {checkLists.map((list) => (
           <div key={list.id} className="nav-item-container">
             <button
