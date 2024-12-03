@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./ProfileEdit.css";
 
 const MyPage = () => {
-  const initialNickname = "원준영"; 
+  const initialNickname = "원준영";
   const initialProfilePic = "https://via.placeholder.com/150";
 
   const [nickname, setNickname] = useState(initialNickname);
   const [profilePic, setProfilePic] = useState(initialProfilePic);
 
-  
   useEffect(() => {
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
@@ -33,7 +32,6 @@ const MyPage = () => {
         const base64Image = reader.result;
         setProfilePic(base64Image);
 
-       
         const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
         if (loggedInUserEmail) {
           const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -48,7 +46,6 @@ const MyPage = () => {
   };
 
   const handleSave = () => {
-    
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
       const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -61,24 +58,9 @@ const MyPage = () => {
     alert("변경사항이 저장되었습니다.");
   };
 
-  const handleCancel = () => {
-    alert("변경이 취소되었습니다.");
-    
-    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
-    if (loggedInUserEmail) {
-      const users = JSON.parse(localStorage.getItem("users")) || {};
-      const user = users[loggedInUserEmail];
-      if (user) {
-        setNickname(user.name || initialNickname);
-        setProfilePic(user.profilePic || initialProfilePic);
-      }
-    }
-  };
-
   const handleDelete = () => {
     setProfilePic(initialProfilePic);
 
-    
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
       const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -91,11 +73,23 @@ const MyPage = () => {
     alert("프로필 사진이 초기화되었습니다.");
   };
 
+  const handleWithdrawal = () => {
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      delete users[loggedInUserEmail]; // 로컬 스토리지에서 해당 사용자 삭제
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.removeItem("loggedInUserEmail"); // 로그인 정보 제거
+      alert("계정이 삭제되었습니다.");
+      window.location.reload(); // 페이지를 새로고침하여 초기 상태로 이동
+    }
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <h2>내 프로필</h2>
-        <p>자취생들을 위한 공간입니다. 정보를 수정하고 자취 팁을 확인하세요!</p>
+        <h2>MY 프로필</h2>
+        <p>당신의 프로필을 확인할 수 있는 공간입니다! 편하게 수정하세요!</p>
       </div>
 
       <div className="profile-edit-section">
@@ -133,15 +127,6 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="profile-buttons">
-        <button className="save-button" onClick={handleSave}>
-          적용
-        </button>
-        <button className="cancel-button" onClick={handleCancel}>
-          취소
-        </button>
-      </div>
-
       <div className="tips-section">
         <h3>자취 생활 꿀팁</h3>
         <ul>
@@ -155,6 +140,15 @@ const MyPage = () => {
             <strong>생활 필수품:</strong> 멀티탭, 공기청정기, 미니 냉장고.
           </li>
         </ul>
+      </div>
+
+      <div className="profile-buttons">
+        <button className="save-button" onClick={handleSave}>
+          적용
+      </button>
+      <button className="cancel-button" onClick={handleWithdrawal}>
+        회원 탈퇴
+      </button>
       </div>
     </div>
   );
