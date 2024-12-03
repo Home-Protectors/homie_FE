@@ -94,8 +94,9 @@ const Sidebar = ({
 
       <h2 className="section-title">나의 목록</h2>
 
+      {/* 나의 목록 - 검색에서 제외 */}
       <div className="checklist-nav">
-        {filteredLists.map((list) => (
+        {checkLists.map((list) => (
           <div key={list.id} className="nav-item-container">
             <button
               className={`nav-item ${selectedList === list.id ? 'active' : ''}`}
