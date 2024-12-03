@@ -94,8 +94,8 @@ const MyPage = () => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <h2>내 프로필</h2>
-        <p>자취생들을 위한 공간입니다. 정보를 수정하고 자취 팁을 확인하세요!</p>
+        <h2>MY 프로필</h2>
+        <p>당신의 프로필을 확인할 수 있는 공간입니다! 편하게 수정하세요!</p>
       </div>
 
       <div className="profile-edit-section">
@@ -133,14 +133,6 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="profile-buttons">
-        <button className="save-button" onClick={handleSave}>
-          적용
-        </button>
-        <button className="cancel-button" onClick={handleCancel}>
-          취소
-        </button>
-      </div>
 
       <div className="tips-section">
         <h3>자취 생활 꿀팁</h3>
@@ -156,6 +148,16 @@ const MyPage = () => {
           </li>
         </ul>
       </div>
+
+      <div className="profile-buttons">
+        <button className="save-button" onClick={handleSave}>
+          적용
+        </button>
+        <button className="cancel-button" onClick={handleCancel}>
+          취소
+        </button>
+      </div>
+      
     </div>
   );
 };

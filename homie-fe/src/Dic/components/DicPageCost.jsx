@@ -759,63 +759,64 @@ const DicPageCost = () => {
   };
 
   return (
-    <div className = {styles.dictionaryContainer}>
-    <div className={styles.modalContainer}>
-    <div className={styles.titleContainer}>
-        <h1 className={styles.mainTitle}>Dictionary</h1>
-        <nav className={styles.categoryNav}>
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`${styles.categoryButton} ${
-                getCurrentCategory() === category ? styles.active : ''
-              }`}
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </nav>
-    </div>
-    <div className={styles.modalsWrapper}>
-        {modals.map((modal, index) => (
-          <div
-            key={modal.id}
-            className={`${styles.modal} 
-                       ${index === currentModal ? styles.active : styles.nonActive}
-                       ${styles[modal.layout]}`} // 레이아웃별 클래스 적용
-            style={getModalStyle(index)}
-          >
-            <div className={styles.modalContent}>
-            <div className={styles.modalTitle}>
-                <h3>{modal.title}</h3>
+      <div className={styles.dictionaryContainer}>
+          <div className={styles.modalContainer}>
+              <div className={styles.titleContainer}>
+                  <h1 className={styles.mainTitle}>Dictionary</h1>
+                  <nav className={styles.categoryNav}>
+                      {categories.map((category) => (
+                          <button
+                              key={category}
+                              className={`${styles.categoryButton} ${
+                                  getCurrentCategory() === category ? styles.active : ''
+                              }`}
+                              onClick={() => handleCategoryClick(category)}
+                          >
+                              {category}
+                          </button>
+                      ))}
+                  </nav>
               </div>
-              <div className={styles.contentBox}>
-                <p>{modal.content}</p>
+
+              <div className={styles.navigationButtons}>
+                  <button 
+                      className={`${styles.navButton} ${isFirstModal ? styles.disabled : ''}`}
+                      onClick={handlePrevClick}
+                      disabled={isFirstModal}
+                  >
+                      ←
+                  </button>
+                  <button 
+                      className={`${styles.navButton} ${isLastModal ? styles.disabled : ''}`}
+                      onClick={handleNextClick}
+                      disabled={isLastModal}
+                  >
+                      →
+                  </button>
               </div>
-            </div>
+
+              <div className={styles.modalsWrapper}>
+                  {modals.map((modal, index) => (
+                      <div
+                          key={modal.id}
+                          className={`${styles.modal} 
+                                  ${index === currentModal ? styles.active : styles.nonActive}
+                                  ${styles[modal.layout]}`}
+                          style={getModalStyle(index)}
+                      >
+                          <div className={styles.modalContent}>
+                              <div className={styles.modalTitle}>
+                                  <h3>{modal.title}</h3>
+                              </div>
+                              <div className={styles.contentBox}>
+                                  <p>{modal.content}</p>
+                              </div>
+                          </div>
+                      </div>
+                  ))}
+              </div>
           </div>
-        ))}
       </div>
-      
-      <div className={styles.navigationButtons}>
-        <button 
-          className={`${styles.navButton} ${isFirstModal ? styles.disabled : ''}`}
-          onClick={handlePrevClick}
-          disabled={isFirstModal}
-        >
-          ←
-        </button>
-        <button 
-          className={`${styles.navButton} ${isLastModal ? styles.disabled : ''}`}
-          onClick={handleNextClick}
-          disabled={isLastModal}
-        >
-          →
-        </button>
-      </div>
-    </div>
-    </div>
   );
 };
 

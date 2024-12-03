@@ -1,13 +1,13 @@
 body {
       font-family: "PyeongChang Peace", sans-serif;
       background-color: #FFF5F7;
-      margin: 0;
+      margin: 0px;
       padding: 0;
 }
 
 .profile-container {
       max-width: 600px;
-      margin: 20px auto;
+      margin: 150px auto;
       background: #ffffff;
       padding: 30px;
       border-radius: 20px;
@@ -157,7 +157,7 @@ body {
       content: "•";
       color: #FF779D;
       position: absolute;
-      left: 6px;
+      left: 100px;
 }
 
 .tips-section li strong {

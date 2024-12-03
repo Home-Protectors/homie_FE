@@ -201,12 +201,13 @@
 
 /* 네비게이션 버튼 */
 .navigationButtons {
-      position: absolute;
+      position: relative;
       bottom: 100px;
       display: flex;
       justify-content: center;
       gap: 300px;
       width: 100%;
+      margin: -10px 0;
 }
 
 .navButton {
