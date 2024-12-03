@@ -96,7 +96,7 @@ const Header = () => {
           onMouseOver={(e) => e.currentTarget.classList.add('hover')}
           onMouseLeave={(e) => e.currentTarget.classList.remove('hover')}
         >
-          <img src="/icons/settings.png" alt="로그아웃" className="icon" />
+          <img src="/icons/logout.png" alt="로그아웃" className="icon" />
         </button>
       </header>
     </div>
