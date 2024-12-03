@@ -44,9 +44,10 @@ const CheckListPage = () => {
   };
 
   const [checkLists, setCheckLists] = useState(getInitialCheckLists);
-  const [selectedList, setSelectedList] = useState(null); // 초기값을 null로 설정합니다.
+  const [selectedList, setSelectedList] = useState(null);
   const [listTitle, setListTitle] = useState('');
   const [todos, setTodos] = useState([]);
+  const [filteredTodos, setFilteredTodos] = useState(null); // 필터링된 할 일
   const [viewMode, setViewMode] = useState('all');
 
   // 초기 로드 시 checkLists와 todos를 설정하는 useEffect
@@ -56,13 +57,11 @@ const CheckListPage = () => {
       const parsedCheckLists = JSON.parse(storedCheckLists);
       setCheckLists(parsedCheckLists);
 
-      // checkLists의 첫 번째 항목을 선택.
       if (parsedCheckLists.length > 0) {
         const firstList = parsedCheckLists[0];
         setSelectedList(firstList.id);
         setListTitle(firstList.title);
 
-        // 첫 번째 리스트의 todos를 불러옵니다.
         const storedTodos = localStorage.getItem(`todos_${firstList.id}`);
         if (storedTodos) {
           setTodos(JSON.parse(storedTodos));
@@ -81,9 +80,11 @@ const CheckListPage = () => {
       const storedTodos = localStorage.getItem(`todos_${selectedList}`);
       if (storedTodos) {
         setTodos(JSON.parse(storedTodos));
+        setFilteredTodos(null); // 필터링 초기화
       } else {
         const initialListTodos = initialTodos[selectedList] || [];
         setTodos(initialListTodos);
+        setFilteredTodos(null); // 필터링 초기화
         localStorage.setItem(`todos_${selectedList}`, JSON.stringify(initialListTodos));
       }
     }
@@ -92,10 +93,8 @@ const CheckListPage = () => {
   // todos 변경 시 로컬 스토리지에 저장하고 count를 업데이트하는 useEffect
   useEffect(() => {
     if (selectedList !== null) {
-      // todos가 변경될 때마다 로컬 스토리지에 저장
       localStorage.setItem(`todos_${selectedList}`, JSON.stringify(todos));
 
-      // count 업데이트 및 checkLists 로컬 스토리지 저장
       const activeCount = todos.filter(todo => !todo.completed).length;
       const updatedCheckLists = checkLists.map(list =>
         list.id === selectedList ? { ...list, count: activeCount } : list
@@ -132,6 +131,18 @@ const CheckListPage = () => {
     }
   };
 
+  // 새 필터링 기능 추가
+  const handleSearchTodos = (searchTerm) => {
+    if (searchTerm.trim() === '') {
+      setFilteredTodos(null); // 검색어가 없으면 모든 할 일 표시
+    } else {
+      const filtered = todos.filter(todo =>
+        todo.text.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredTodos(filtered); // 검색된 결과만 필터링
+    }
+  };
+
   return (
     <div className="checklist-page">
       <div className="content">
@@ -143,11 +154,12 @@ const CheckListPage = () => {
           onViewCompleted={() => setViewMode('completed')}
           onCreateList={handleCreateList}
           onDeleteList={handleDeleteList}
+          onSearchTodos={handleSearchTodos} // 필터링 함수 전달
         />
-        <TodoList 
+        <TodoList
           listId={selectedList}
           listTitle={listTitle}
-          todos={todos}
+          todos={filteredTodos || todos} // 필터링된 항목 표시
           setTodos={setTodos}
           viewMode={viewMode}
         />

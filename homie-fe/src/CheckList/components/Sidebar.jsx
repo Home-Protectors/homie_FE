@@ -1,5 +1,3 @@
-/* src/CheckList/components/Sidebar.jsx */
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/sidebar.css';
@@ -12,6 +10,7 @@ const Sidebar = ({
   onViewCompleted,
   onCreateList,
   onDeleteList,
+  onSearchTodos, // 새로 추가된 콜백 함수
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredLists, setFilteredLists] = useState(checkLists); // Filtered search results
@@ -19,47 +18,30 @@ const Sidebar = ({
   const [isAdding, setIsAdding] = useState(false);
   const navigate = useNavigate();
 
-  //목록 선택 인덱스 확인
-  const getSelectedIndex = () => {
-      return filteredLists.findIndex(list => list.id === selectedList);
-  };
-
-  //목록인덱스값과 크기를 곱하여 사각형 이동거리 계산
-  const getIndicatorStyle = () => {
-      const selectedIndex = getSelectedIndex();
-      if (selectedIndex === -1) return {};
-      return {
-        transform: `translateY(${selectedIndex * 45}px)`, // 45px is the height of each item
-        opacity: selectedIndex === -1 ? 0 : 1
-      };
-    };
-
-  // Sync filtered lists when checkLists changes
+  // 검색어를 기반으로 체크리스트 필터링
   useEffect(() => {
-    setFilteredLists(checkLists);
-  }, [checkLists]);
-
-  // Search functionality
-  const handleSearch = (e) => {
-    if (e.key === 'Enter') {
-      if (searchTerm.trim() === '') {
-        setFilteredLists(checkLists);
-      } else {
-        const filtered = checkLists.filter((list) =>
-          list.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredLists(filtered);
-      }
+    if (searchTerm.trim() === '') {
+      setFilteredLists(checkLists); // 검색어가 없을 경우 전체 리스트를 보여줍니다.
+    } else {
+      const filtered = checkLists.filter((list) =>
+        list.title.toLowerCase().includes(searchTerm.toLowerCase()) // 검색어와 제목 비교
+      );
+      setFilteredLists(filtered); // 필터링된 결과 업데이트
     }
+  }, [searchTerm, checkLists]);
+
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term); // 검색어 상태 업데이트
+    onSearchTodos(term); // 부모 컴포넌트로 검색어 전달
   };
 
-  // Reset search input
   const resetSearch = () => {
-    setSearchTerm('');
-    setFilteredLists(checkLists);
+    setSearchTerm(''); // 검색 초기화
+    setFilteredLists(checkLists); // 원래 목록 복원
+    onSearchTodos(''); // 전체 표시로 복원
   };
 
-  // Add new checklist
   const handleAddNewList = () => {
     if (newListTitle.trim()) {
       onCreateList(newListTitle.trim());
@@ -68,7 +50,6 @@ const Sidebar = ({
     }
   };
 
-  // Confirm and delete checklist
   const handleDeleteList = (listId) => {
     const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
     if (isConfirmed) {
@@ -80,13 +61,13 @@ const Sidebar = ({
     <div className="sidebar">
       <h1 className="sidebar-title">자취 CheckList</h1>
 
+      {/* 검색 기능 추가 */}
       <div className="search-container">
         <input
           type="text"
           placeholder="검색"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyPress={handleSearch}
+          onChange={handleSearchChange}
           className="search-input"
         />
         {searchTerm && (
@@ -114,7 +95,6 @@ const Sidebar = ({
       <h2 className="section-title">나의 목록</h2>
 
       <div className="checklist-nav">
-       <div className="nav-selection-indicator" style={getIndicatorStyle()} />
         {filteredLists.map((list) => (
           <div key={list.id} className="nav-item-container">
             <button
