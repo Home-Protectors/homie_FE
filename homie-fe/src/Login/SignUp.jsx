@@ -81,7 +81,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="auth-signup-form-group">
-                    <label htmlFor="email">아이디</label>
+                    <label htmlFor="email">이메일</label>
                     <input
                         type="email"
                         id="email"
