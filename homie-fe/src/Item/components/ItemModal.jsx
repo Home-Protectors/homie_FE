@@ -10,11 +10,17 @@ const ItemModal = ({ item, onClose }) => {
         <div className="modal-content">
           <div className="modal-inner">
             <div className="modal-image-container">
+            <a 
+                href={item.brandsite} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
               <img 
                 src={item.image} 
                 alt={item.name} 
                 className="modal-image"
               />
+              </a>
             </div>
             <div className="modal-text">
               <h3 className="modal-brand">{item.brand}</h3>
